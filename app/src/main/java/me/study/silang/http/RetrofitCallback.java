@@ -4,10 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
-
 import io.reactivex.observers.DisposableObserver;
 import me.study.silang.R;
-import me.study.silang.base.bean.Rest;
+import me.study.silang.bean.Rest;
 import me.study.silang.ui.login.LoginActivity;
 import retrofit2.HttpException;
 
@@ -19,7 +18,7 @@ public abstract class RetrofitCallback<M> extends DisposableObserver<M> {
     public abstract void onFailure(String msg);
 
     public void onInvalid() {
-        Toast.makeText(context, "由于你长时间没有操作或者账号失效了，请重新登录！", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Session is invalid, please re-login", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(context, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
@@ -43,21 +42,23 @@ public abstract class RetrofitCallback<M> extends DisposableObserver<M> {
             String msg = httpException.getMessage();
             //LogUtil.d("code=" + code);
             if (code == 504) {
-                msg = context.getResources().getString(R.string.error_504);
+                msg = "The status of network is bad!";
             }
             if (code == 502) {
-                msg = context.getResources().getString(R.string.error_502);
+                msg = "Server failure!";
             }
             if (code == 404 || code == 500) {
-                msg = context.getResources().getString(R.string.error_404_and_500);
+                msg = "Server down!";
             }
             onFailure(msg);
         } else {
             if (e.getMessage().toLowerCase().contains("failed to connect to")) {
-                onFailure(context.getResources().getString(R.string.error_network));
+                onFailure("It can't connect to network of server!");
+                return;
+            } else {
+                onFailure(e.getMessage());
                 return;
             }
-            onFailure(context.getResources().getString(R.string.error_network));
         }
         onFinish();
     }
@@ -78,13 +79,13 @@ public abstract class RetrofitCallback<M> extends DisposableObserver<M> {
                     onInvalid();
                     break;
                 case 203:
-                    onFailure(context.getResources().getString(R.string.error_203));
+                    onFailure("Access define");
                     break;
                 case 205:
-                    onFailure(context.getResources().getString(R.string.error_205));
+                    onFailure("Auth fail");
                     break;
                 case 206:
-                    onFailure(context.getResources().getString(R.string.error_206));
+                    onFailure("No permission");
                     break;
             }
         } else

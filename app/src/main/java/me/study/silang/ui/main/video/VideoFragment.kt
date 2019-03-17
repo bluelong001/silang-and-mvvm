@@ -8,8 +8,5 @@ import org.kodein.di.Kodein
 class VideoFragment : BaseFragment<FragmentVideoBinding>(){
 
     override val layoutId: Int = R.layout.fragment_video
-    override val kodein: Kodein = Kodein.lazy {
-        extend(parentKodein)
 
-    }
 }

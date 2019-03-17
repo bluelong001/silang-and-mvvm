@@ -12,7 +12,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.support.closestKodein
 import org.kodein.di.generic.kcontext
 
-abstract class BaseFragment<B : ViewDataBinding> : InjectionFragment() {
+abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 
     private var mRootView: View? = null
 

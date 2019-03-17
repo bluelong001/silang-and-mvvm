@@ -5,7 +5,6 @@ import lombok.Data
 
 import java.io.Serializable
 
-@Data
 class Rest<T> : Serializable {
 
     var data: T? = null

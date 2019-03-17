@@ -1,5 +1,6 @@
 package me.study.silang.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import me.study.silang.R
@@ -21,5 +22,6 @@ class LoginActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "LoginFragment"
+
     }
 }

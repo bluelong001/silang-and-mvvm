@@ -12,5 +12,41 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="post_content">When visitors to the gigantic Palace Museum complex in Beijing feel a need to sit down for a cup of tea or find a bathroom without a long line, they soon will be able to turn to their smartphones for the information they need.
+
+        This modern-day solution at the venerable compound comes thanks to an agreement signed on Friday by the museum and Huawei Co, the telecommunication giant, to build a "smart network" using 5G technology, the fifth generation of mobile network communications.
+
+        Under the agreement, 5G Wi-Fi signals will cover the 720,000-square-meter compound, China\'s imperial palace from 1420 to 1911 and also known as the Forbidden City, and the branch museum of the institution under construction in northwestern Beijing.
+
+        But visitor comfort is not the only benefit of a 5G smart network.
+
+        Huawei will also provide the museum with cutting-edge technologies for the internet of things－devices or objects linked in a network－cloud computing and artificial intelligence to facilitate such functions as management, security and preservation of cultural relics.
+
+        "It\'s essential to always stay close to the latest technology to better serve the public," said Shan Jixiang, director of the Palace Museum.
+
+        Shan said there is still much room for improvement in the handling of a huge number of cultural relics, such as when the priceless painting Along the River During the Qingming Festival is exhibited again next year.
+
+        The Northern Song Dynasty (960-1127) landscape painting is considered the best-known ancient Chinese work of art. When it was last exhibited in 2015, visitors stood in long lines until 3 am to get a glimpse. The museum ended up preparing instant noodles to serve the hungry visitors.
+
+        "I don\'t want that scenario to recur," Shan said. "Our operation can be done in a more scientific way."
+
+        The new system will make use of the more than 3,000 closed-circuit television cameras that are installed all over the Palace Museum. Shan said facial-recognition technology will determine which areas are most popular with frequent visitors in order to analyze their preferences.
+
+        "We can later, accordingly, provide useful information on our exhibitions," he said.
+
+        The CCTV cameras also are used to safeguard the museum\'s precious relics. More than 1.86 million of them are housed at the museum, which logged 17.5 million visits from the public in 2018, topping all museums worldwide.
+
+        "How can we make sure no single visitor who might have evil ideas threatens these treasures?" Shan said. "After adopting the internet of things, we can instantly detect any motion involving the artifacts to prevent such threats."
+
+        Such a networked system also will be used to facilitate management of inventory and closely supervise transportation and exhibition of cultural relics.
+
+        New technologies can assist the museum staff in other ways, too, said Wang Tao, a member of Huawei\'s board of directors.
+
+        The company will use algorithms to more efficiently draft tailored plans for restoring cultural relics after information on similar pieces and files on each collection are included in a database.
+
+        "We can thus combine old craftsmen\'s experience and artificial intelligence," Wang said.
+
+        The 5G network also will be used to improve remote consultation through webcams, which will facilitate conversations with overseas scholars to jointly find the best answers for restoration and preservation issues, he said.</string>
+    <string name="post_title">Palace Museum to get 5G technology</string>
+    <string name="post_create">2018-12-25</string>
 </resources>

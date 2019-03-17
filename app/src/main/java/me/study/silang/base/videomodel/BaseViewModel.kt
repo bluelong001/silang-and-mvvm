@@ -1,3 +1,7 @@
 package me.study.silang.base.videomodel
 
-open class BaseViewModel : AutoDisposeViewModel()
+import androidx.lifecycle.ViewModel
+
+open class BaseViewModel : ViewModel()
+
+//    : AutoDisposeViewModel()

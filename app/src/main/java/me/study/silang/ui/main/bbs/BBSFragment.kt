@@ -9,10 +9,7 @@ import org.kodein.di.Kodein
 class BBSFragment : BaseFragment<FragmentBbsBinding>() {
 
     override val layoutId: Int = R.layout.fragment_bbs
-    override val kodein: Kodein = Kodein.lazy {
-        extend(parentKodein)
 
-    }
 
 
 }

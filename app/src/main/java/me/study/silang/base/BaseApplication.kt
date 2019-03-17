@@ -9,15 +9,15 @@ import org.kodein.di.android.x.androidXModule
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.singleton
 
-open class BaseApplication : Application(), KodeinAware {
-
-    override val kodein: Kodein = Kodein.lazy {
-        bind<Context>() with singleton { this@BaseApplication }
-        import(androidModule(this@BaseApplication))
-        import(androidXModule(this@BaseApplication))
-
-
-    }
+open class BaseApplication : Application() {
+//    , KodeinAware
+//    override val kodein: Kodein = Kodein.lazy {
+//        bind<Context>() with singleton { this@BaseApplication }
+//        import(androidModule(this@BaseApplication))
+//        import(androidXModule(this@BaseApplication))
+//
+//
+//    }
 
     override fun onCreate() {
         super.onCreate()

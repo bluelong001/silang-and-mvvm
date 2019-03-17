@@ -11,11 +11,11 @@ import org.kodein.di.generic.kcontext
 
 abstract class InjectionActivity : AutoDisposeActivity(), KodeinAware {
 
-    protected val parentKodein by closestKodein()
-
-    override val kodeinContext = kcontext<AppCompatActivity>(this)
-
-    override val kodein: Kodein by retainedKodein {
-        extend(parentKodein, copy = Copy.All)
-    }
+//    protected val parentKodein by closestKodein()
+//
+//    override val kodeinContext = kcontext<AppCompatActivity>(this)
+//
+//    override val kodein: Kodein by retainedKodein {
+//        extend(parentKodein, copy = Copy.All)
+//    }
 }
