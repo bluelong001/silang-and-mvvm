@@ -118,6 +118,13 @@
                         app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/ReplyNum"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true" app:srcCompat="@drawable/ic_add_white_48dp"
+                android:id="@+id/btn_post_add"
+                android:layout_marginBottom="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_gravity="bottom|right" tools:ignore="RtlHardcoded"/>
     </FrameLayout>
 </layout>
