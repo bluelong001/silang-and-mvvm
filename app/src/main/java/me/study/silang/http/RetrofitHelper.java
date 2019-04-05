@@ -2,13 +2,14 @@ package me.study.silang.http;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.gson.*;
-import me.study.silang.bean.ServerConfig;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -27,86 +28,17 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public class RetrofitHelper {
+    <S> S createService(Class<S> serviceClass, String authToken) {
 
-    private final String BASE_URL = ServerConfig.DEV.getIp();
-    private static Context mContext;
-    private RetrofitInterface retrofitInterface;
-    private ClearableCookieJar cookieJar =
-            new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(mContext));
-    private OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder().cookieJar(cookieJar)
-            .writeTimeout(60, TimeUnit.SECONDS)
-            .connectTimeout(60, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS);
-    private OkHttpClient okHttpClient = new OkHttpClient();
-    private GsonConverterFactory gsonConverterFactory = GsonConverterFactory.create(new GsonBuilder().registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
-        @Override
-        public Date deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-            String datetime = json.getAsJsonPrimitive().getAsString().replace("T", " ");
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            format.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-            try {
-                return format.parse(datetime);
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return new Date();
-            }
-        }
-    }).registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
-        @Override
-        public Date deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-            String datetime = json.getAsJsonPrimitive().getAsString().replace("T", " ");
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            format.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-            try {
-                return format.parse(datetime);
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return new Date();
-            }
-        }
-    }).create());
-    //由于该对象会被频繁调用，采用单例模式，下面是一种线程安全模式的单例写法
-    private volatile static RetrofitHelper instance;
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl("http://192.168.199.225:8080/api/");
 
-    public static RetrofitHelper getInstance(Context context) {
-        mContext = context;
-        if (instance == null) {
-            synchronized (RetrofitHelper.class) {
-                if (instance == null) {
-                    instance = new RetrofitHelper();
-                }
-            }
-        }
-        return instance;
-    }
+        OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
 
-    private RetrofitHelper() {
-        init();
-    }
 
-    private void init() {
-        retrofitInterface = createService(RetrofitInterface.class);
-    }
+        OkHttpClient okHttpClient = okHttpClientBuilder.build();
 
-    public void reload() {
-        init();
-    }
-
-    public RetrofitInterface getRetrofitApiService() {
-        return retrofitInterface;
-    }
-
-    private <S> S createService(Class<S> serviceClass) {
-//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-//        String token = sharedPreferences.getString("silangToken","");
-        return createService(serviceClass, null);
-    }
-
-    private Retrofit.Builder builder = new Retrofit.Builder()
-            .baseUrl(BASE_URL);
-
-    private <S> S createService(Class<S> serviceClass, final String authToken) {
-        if (TextUtils.isEmpty(authToken)) {
+        if (null!=authToken&&!authToken.equals("")) {
             okHttpClient = okHttpClientBuilder
                     .addInterceptor(new Interceptor() {
                         @Override
@@ -122,6 +54,31 @@ public class RetrofitHelper {
                     }).build();
         } else
             okHttpClient = okHttpClientBuilder.build();
+
+        GsonConverterFactory gsonConverterFactory = GsonConverterFactory.create(new GsonBuilder().registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+            @Override
+            public Date deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+                String datetime = json.getAsJsonPrimitive().getAsString().replace("T", " ");
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                format.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+                try {
+                    return format.parse(datetime);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return new Date();
+                }
+            }
+        }).registerTypeAdapter(Date.class, (JsonDeserializer<Date>) (json, type, jsonDeserializationContext) -> {
+            String datetime = json.getAsJsonPrimitive().getAsString().replace("T", " ");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            format.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+            try {
+                return format.parse(datetime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return new Date();
+            }
+        }).create());
 
         Retrofit retrofit = builder
                 .client(okHttpClient)

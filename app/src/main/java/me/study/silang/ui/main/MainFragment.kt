@@ -6,6 +6,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_main.*
 import me.study.silang.R
 import me.study.silang.base.fragment.BaseFragment
+import me.study.silang.base.videomodel.BaseViewModel
 import me.study.silang.databinding.FragmentMainBinding
 import me.study.silang.ui.main.bbs.BBSFragment
 import me.study.silang.ui.main.me.MeFragment
@@ -15,6 +16,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
 
     override val layoutId: Int = R.layout.fragment_main
 
+    override val vm:BaseViewModel = MainViewModel()
     override fun initView() {
         viewPager.adapter = MainPagerAdapter(
             fragmentManager!!,

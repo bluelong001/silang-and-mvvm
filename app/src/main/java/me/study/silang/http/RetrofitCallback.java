@@ -24,7 +24,7 @@ public abstract class RetrofitCallback<M> extends DisposableObserver<M> {
         context.startActivity(intent);
     }
 
-    public abstract void onFinish();
+    public void onFinish(){}
 
     public Context context;
 
