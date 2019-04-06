@@ -14,7 +14,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     override val vm: LoginViewModel = LoginViewModel()
     //
     override fun initView() {
-
+ 
     }
 
     fun login() {

@@ -9,9 +9,8 @@ import org.kodein.di.Kodein
 
 class BBSFragment : BaseFragment<FragmentBbsBinding>() {
 
-    override val vm: BaseViewModel = BBSViewModel()
+    override val vm: BBSViewModel = BBSViewModel()
     override val layoutId: Int = R.layout.fragment_bbs
-
 
 
 }

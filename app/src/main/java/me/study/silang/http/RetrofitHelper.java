@@ -38,6 +38,7 @@ public class RetrofitHelper {
 
         OkHttpClient okHttpClient = okHttpClientBuilder.build();
 
+
         if (null!=authToken&&!authToken.equals("")) {
             okHttpClient = okHttpClientBuilder
                     .addInterceptor(new Interceptor() {

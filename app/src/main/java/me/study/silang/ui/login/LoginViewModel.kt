@@ -12,7 +12,6 @@ class LoginViewModel : BaseViewModel() {
     val password = ObservableField<String>()
 
     fun login(callback: RetrofitCallback<String>) {
-
         RetrofitManager.login(
             username.get(), password.get(), callback
         )
