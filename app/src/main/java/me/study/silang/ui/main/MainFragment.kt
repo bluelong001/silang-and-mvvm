@@ -16,7 +16,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
 
     override val layoutId: Int = R.layout.fragment_main
 
-    override val vm:BaseViewModel = MainViewModel()
+    val vm:BaseViewModel = MainViewModel()
     override fun initView() {
         viewPager.adapter = MainPagerAdapter(
             fragmentManager!!,

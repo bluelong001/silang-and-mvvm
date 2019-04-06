@@ -11,10 +11,9 @@ import me.study.silang.repository.LoginRepository;
 
 public class RetrofitManager<S> {
     private S service;
-    private RetrofitManager() {
-    }
-    private void init(Context context, Class<S> clazz) {
-        service = create(context, clazz);
+
+    public RetrofitManager(Context context, Class<S> clazz) {
+        service = (S)create(context, clazz);
     }
 
 
@@ -25,9 +24,9 @@ public class RetrofitManager<S> {
         return retrofitHelper.createService(clazz, token);
     }
 
-    public static void login(String username, String password,RetrofitCallback callback) {
+    public static void login(String username, String password, RetrofitCallback callback) {
         RetrofitHelper retrofitHelper = new RetrofitHelper();
-        retrofitHelper.createService(LoginRepository.class, null).login(username,password)
+        retrofitHelper.createService(LoginRepository.class, null).login(username, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(callback);
@@ -36,17 +35,10 @@ public class RetrofitManager<S> {
     private volatile static RetrofitManager instance;
 
     public static <S> RetrofitManager getInstance(Context context, Class<S> clazz) {
-        if (instance == null) synchronized (RetrofitManager.class) {
-            if (instance == null) {
-                instance = new RetrofitManager();
-                instance.init(context,clazz);
-            }
+        instance = null;
+        synchronized (RetrofitManager.class) {
+            instance = new RetrofitManager<S>(context, clazz);
         }
-        return instance;
-    }
-
-    public static RetrofitManager setInstance(Context context, Class clazz) {
-        instance.init(context,clazz);
         return instance;
     }
 

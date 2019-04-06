@@ -18,19 +18,15 @@ public abstract class RetrofitCallback<M> extends DisposableObserver<M> {
     public abstract void onFailure(String msg);
 
     public void onInvalid() {
-        Toast.makeText(context, "Session is invalid, please re-login", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(context, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        context.startActivity(intent);
+//        Toast.makeText(context, "Session is invalid, please re-login", Toast.LENGTH_SHORT).show();
+//        Intent intent = new Intent(context, LoginActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        context.startActivity(intent);
     }
 
     public void onFinish(){}
 
-    public Context context;
 
-    public void bindContext(Context context) {
-        this.context = context;
-    }
 
     @Override
     public void onError(Throwable e) {

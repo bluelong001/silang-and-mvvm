@@ -53,28 +53,29 @@
                     android:id="@+id/constraintLayout6">
 
                 <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" app:srcCompat="@drawable/ic_add_black_48dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" app:srcCompat="@drawable/ic_add_black_48dp"
                         android:id="@+id/findVideo"
                         android:onClick="@{()->fragment.addVideo()}"
                         android:layout_marginBottom="8dp"
                         app:layout_constraintBottom_toTopOf="@+id/upload"
                         app:layout_constraintStart_toEndOf="@+id/label" android:layout_marginStart="8dp"
-                        app:layout_constraintTop_toTopOf="@+id/textView12"/>
+                        android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/edLabel"/>
 
                 <TextView
                         android:text="Label:"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/label" android:layout_marginTop="16dp"
-                        app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="24dp"/>
+                        android:id="@+id/label"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="24dp" android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/edLabel"/>
                 <MultiAutoCompleteTextView
-                        android:text="MultiAutoCompleteTextView"
+                        android:text="@={fragment.vm.label}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/multiAutoCompleteTextView2"
-                        android:layout_marginTop="16dp"
+                        android:id="@+id/edLabel"
+                        android:layout_marginTop="24dp"
                         android:layout_marginStart="8dp" app:layout_constraintStart_toEndOf="@+id/label"
                         app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginEnd="32dp"/>
@@ -83,17 +84,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/textView12"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/multiAutoCompleteTextView2"
-                        app:layout_constraintEnd_toEndOf="@+id/label"/>
+                        app:layout_constraintEnd_toEndOf="@+id/label"
+                        app:layout_constraintBottom_toBottomOf="@+id/findVideo" android:layout_marginBottom="8dp"/>
                 <Button
                         android:text="upload"
                         android:layout_width="match_parent"
+                        android:clickable="@{fragment.vm.videoUri!=null}"
                         android:layout_height="0dp" android:id="@+id/upload"
-                        app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginEnd="24dp"
-                        android:onClick="@{()->upload}"
+                        android:onClick="@{()->fragment.vm.insertVideo()}"
                         app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="24dp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

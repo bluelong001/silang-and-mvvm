@@ -10,7 +10,7 @@ import org.kodein.di.Kodein
 
 class MeFragment : BaseFragment<FragmentMeBinding>() {
     override val layoutId: Int = R.layout.fragment_me
-    override val vm:BaseViewModel = MeViewModel()
+    val vm:BaseViewModel = MeViewModel()
 
     fun logout() =
         activity.apply {

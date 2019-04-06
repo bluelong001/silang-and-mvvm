@@ -1,5 +1,6 @@
 package me.study.silang.base.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,13 +20,14 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 
     protected lateinit var binding: B
 
-    abstract val vm:BaseViewModel
+    lateinit var mContext: Context
     abstract val layoutId: Int
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         mRootView = LayoutInflater.from(context).inflate(layoutId, container, false)
+        mContext = context!!
         return mRootView!!
     }
 

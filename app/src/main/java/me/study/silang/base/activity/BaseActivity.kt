@@ -8,6 +8,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import me.study.silang.BR
 
 abstract class BaseActivity<B : ViewDataBinding> :   AppCompatActivity() {
 
@@ -33,10 +34,10 @@ abstract class BaseActivity<B : ViewDataBinding> :   AppCompatActivity() {
 
     private fun initBinding() {
         binding = DataBindingUtil.setContentView(this, layoutId)
-//        with(binding) {
-//            setVariable(BR.activity, this@BaseActivity)
-//            setLifecycleOwner(this@BaseActivity)
-//        }
+        with(binding) {
+            setVariable(BR.activity, this@BaseActivity)
+            setLifecycleOwner(this@BaseActivity)
+        }
     }
 
     private fun hideStatusBar() {
