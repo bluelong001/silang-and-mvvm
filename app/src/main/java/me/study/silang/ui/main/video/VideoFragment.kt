@@ -16,6 +16,7 @@ import android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO
 import androidx.appcompat.app.AlertDialog
 import android.util.Log
 import androidx.core.content.FileProvider
+import kotlinx.android.synthetic.main.fragment_video.*
 import me.study.silang.component.Glide4Engine
 import java.io.File
 import java.nio.file.Files.exists
@@ -36,6 +37,8 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>() {
 
     override fun initView() {
         vm = VideoViewModel(mContext)
+        vm.selectVideo()
+        gv_video.adapter=vm.videoAdapter
     }
 
 
@@ -88,40 +91,40 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>() {
         }
         Log.d(TAG, vm.videoUri.toString())
     }
-
-    /** Create a file Uri for saving an image or video */
-    private fun getOutputMediaFileUri(type: Int): Uri {
-        return FileProvider.getUriForFile(context!!, "me.study.silang.fileprovider",getOutputMediaFile(type)!!)
-    }
-
-    /** Create a File for saving an image or video */
-    private fun getOutputMediaFile(type: Int): File? {
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
-
-        val mediaStorageDir = File(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).path +File.separator+"Camera"
-        )
-        // This location works best if you want the created images to be shared
-        // between applications and persist after your app has been uninstalled.
-
-        // Create the storage directory if it does not exist
-        mediaStorageDir.apply {
-            if (!exists()) {
-                if (!mkdirs()) {
-                    Log.d("MyCameraApp", "failed to create directory")
-                    return null
-                }
-            }
-        }
-
-        // Create a media file name
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        return when (type) {
-            MEDIA_TYPE_VIDEO -> {
-                File("${mediaStorageDir.path}${File.separator}VID_$timeStamp.mp4")
-            }
-            else -> null
-        }
-    }
+//
+//    /** Create a file Uri for saving an image or video */
+//    private fun getOutputMediaFileUri(type: Int): Uri {
+//        return FileProvider.getUriForFile(context!!, "me.study.silang.fileprovider",getOutputMediaFile(type)!!)
+//    }
+//
+//    /** Create a File for saving an image or video */
+//    private fun getOutputMediaFile(type: Int): File? {
+//        // To be safe, you should check that the SDCard is mounted
+//        // using Environment.getExternalStorageState() before doing this.
+//
+//        val mediaStorageDir = File(
+//            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).path +File.separator+"Camera"
+//        )
+//        // This location works best if you want the created images to be shared
+//        // between applications and persist after your app has been uninstalled.
+//
+//        // Create the storage directory if it does not exist
+//        mediaStorageDir.apply {
+//            if (!exists()) {
+//                if (!mkdirs()) {
+//                    Log.d("MyCameraApp", "failed to create directory")
+//                    return null
+//                }
+//            }
+//        }
+//
+//        // Create a media file name
+//        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+//        return when (type) {
+//            MEDIA_TYPE_VIDEO -> {
+//                File("${mediaStorageDir.path}${File.separator}VID_$timeStamp.mp4")
+//            }
+//            else -> null
+//        }
+//    }
 }

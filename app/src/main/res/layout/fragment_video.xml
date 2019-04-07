@@ -10,16 +10,18 @@
 
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <GridView
-                android:background="#FFF"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/gv_video"/>
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" android:id="@+id/constraintLayout7">
 
+            <GridView
+                    android:background="#FFF"
+                    android:layout_width="0dp"
+                    android:numColumns="2"
+                    android:layout_height="0dp" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/gv_video"
+                    app:layout_constraintTop_toBottomOf="@+id/sv_video"/>
             <SearchView
                     android:background="#FFFFFF"
                     android:layout_width="match_parent"

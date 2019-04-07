@@ -11,10 +11,13 @@ import org.kodein.di.Kodein
 
 class BBSFragment : BaseFragment<FragmentBbsBinding>() {
 
-    val vm: BBSViewModel = BBSViewModel()
+    lateinit var vm: BBSViewModel
     override val layoutId: Int = R.layout.fragment_bbs
 
 
+    override fun initView() {
+        vm= BBSViewModel(mContext)
+    }
     fun newPost() {
         Intent(activity, PostNewActivity::class.java).also { intent ->
             startActivityForResult(intent, REQUEST_CODE_NEW_POST)

@@ -1,29 +1,54 @@
 package me.study.silang.ui.main.video
 
+import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableArrayList
+import androidx.recyclerview.widget.ListAdapter
+import me.study.silang.R
+import me.study.silang.base.adapter.BaseBindingAdapter
+import me.study.silang.databinding.ListItemVideoBinding
+import me.study.silang.entity.Video
 
-class VideoAdapter:BaseAdapter(){
+class VideoAdapter(var context: Context) : BaseAdapter() {
+    var videoList = ObservableArrayList<VideoModel>()
 
-//    class ViewHolder{
-//        private val binding:
-//    }
-
+    fun addAll(model:List<VideoModel>){
+        videoList.addAll(model)
+        notifyDataSetChanged()
+    }
+    fun add(model:VideoModel){
+        videoList.add(model)
+        notifyDataSetChanged()
+    }
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        var binding: ListItemVideoBinding
+        if (convertView == null) {
+            binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.list_item_video, parent, false)
+            binding.root.tag = binding
+            binding.model  =getItem(position)
+            return binding.root
+        } else {
+            binding = convertView.tag as ListItemVideoBinding
+        }
+        binding.model  =getItem(position)
+        return convertView
     }
 
-    override fun getItem(position: Int): Any {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getItem(position: Int): VideoModel? {
+        return videoList[position]
+
     }
 
-    override fun getItemId(position: Int): Long {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getItemId(position: Int):Long  {
+        return position.toLong()
     }
 
     override fun getCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return videoList.size
     }
 
 }
