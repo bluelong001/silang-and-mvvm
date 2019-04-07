@@ -38,7 +38,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/textView6"/>
         <TextView
-                android:text="@{model.replyNum}"
+                android:text="@{model.replyNum.toString()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView9" android:layout_marginTop="8dp"
