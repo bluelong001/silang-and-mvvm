@@ -15,7 +15,9 @@ import android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE
 import android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO
 import androidx.appcompat.app.AlertDialog
 import android.util.Log
+import android.view.View
 import androidx.core.content.FileProvider
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_video.*
 import me.study.silang.component.Glide4Engine
 import java.io.File
@@ -24,7 +26,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class VideoFragment : BaseFragment<FragmentVideoBinding>() {
+class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoAdapter.Callback {
+    override fun click(v: View) {
+        var videoInfo: VideoModel = v.tag as VideoModel
+        Intent(context, VideoDetailActivity::class.java).also { intent ->
+            intent.putExtra("data", Gson().toJson(videoInfo))
+            startActivity(intent)
+        }
+    }
+
     companion object {
         private const val TAG = "VideoFragment"
         const val REQUEST_CODE_CHOOSE: Int = 1
@@ -37,8 +47,9 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>() {
 
     override fun initView() {
         vm = VideoViewModel(mContext)
-        vm.selectVideo()
-        gv_video.adapter=vm.videoAdapter
+        vm.videoAdapter = VideoAdapter(mContext, this)
+        vm.initVideo()
+        gv_video.adapter = vm.videoAdapter
     }
 
 
@@ -72,8 +83,8 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>() {
     private fun makeVideo() {
         Intent(MediaStore.ACTION_VIDEO_CAPTURE).also { takeVideoIntent ->
             run {
-                    takeVideoIntent .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                        .putExtra(MediaStore.EXTRA_DURATION_LIMIT, 20)
+                takeVideoIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+//                    .putExtra(MediaStore.EXTRA_DURATION_LIMIT, 20)
 //                        .putExtra(MediaStore.EXTRA_OUTPUT,getOutputMediaFileUri(MEDIA_TYPE_VIDEO))
                 takeVideoIntent.resolveActivity(this.activity!!.packageManager)?.also {
                     startActivityForResult(takeVideoIntent, REQUEST_CODE_MAKE)
@@ -91,40 +102,4 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>() {
         }
         Log.d(TAG, vm.videoUri.toString())
     }
-//
-//    /** Create a file Uri for saving an image or video */
-//    private fun getOutputMediaFileUri(type: Int): Uri {
-//        return FileProvider.getUriForFile(context!!, "me.study.silang.fileprovider",getOutputMediaFile(type)!!)
-//    }
-//
-//    /** Create a File for saving an image or video */
-//    private fun getOutputMediaFile(type: Int): File? {
-//        // To be safe, you should check that the SDCard is mounted
-//        // using Environment.getExternalStorageState() before doing this.
-//
-//        val mediaStorageDir = File(
-//            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).path +File.separator+"Camera"
-//        )
-//        // This location works best if you want the created images to be shared
-//        // between applications and persist after your app has been uninstalled.
-//
-//        // Create the storage directory if it does not exist
-//        mediaStorageDir.apply {
-//            if (!exists()) {
-//                if (!mkdirs()) {
-//                    Log.d("MyCameraApp", "failed to create directory")
-//                    return null
-//                }
-//            }
-//        }
-//
-//        // Create a media file name
-//        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-//        return when (type) {
-//            MEDIA_TYPE_VIDEO -> {
-//                File("${mediaStorageDir.path}${File.separator}VID_$timeStamp.mp4")
-//            }
-//            else -> null
-//        }
-//    }
 }

@@ -7,35 +7,54 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableArrayList
-import androidx.recyclerview.widget.ListAdapter
 import me.study.silang.R
-import me.study.silang.base.adapter.BaseBindingAdapter
 import me.study.silang.databinding.ListItemVideoBinding
-import me.study.silang.entity.Video
+import android.graphics.Bitmap
+import android.media.MediaMetadataRetriever
+import me.study.silang.generated.callback.OnClickListener
+import java.util.*
 
-class VideoAdapter(var context: Context) : BaseAdapter() {
+
+class VideoAdapter(var context: Context,var callback:Callback) : BaseAdapter() {
+
+
     var videoList = ObservableArrayList<VideoModel>()
 
-    fun addAll(model:List<VideoModel>){
+    fun init(model: List<VideoModel>) {
+        videoList.clear()
         videoList.addAll(model)
         notifyDataSetChanged()
     }
-    fun add(model:VideoModel){
+    fun addAll(model: List<VideoModel>) {
+        videoList.addAll(model)
+        notifyDataSetChanged()
+    }
+
+    fun add(model: VideoModel) {
         videoList.add(model)
         notifyDataSetChanged()
     }
+
+    interface Callback{
+        fun click(v:View)
+    }
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var binding: ListItemVideoBinding
+        var view: View
         if (convertView == null) {
             binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.list_item_video, parent, false)
-            binding.root.tag = binding
-            binding.model  =getItem(position)
-            return binding.root
+            view = binding.root
+            view.tag = binding
         } else {
             binding = convertView.tag as ListItemVideoBinding
+            view = convertView
         }
-        binding.model  =getItem(position)
-        return convertView
+        binding.video.setImageBitmap(getImg(videoList[position].fileUrl!!))
+        binding.videoCard.tag = videoList[position]
+        binding.videoCard.setOnClickListener {view->callback.click(view!!) }
+        binding.model = videoList[position]
+        return view
     }
 
     override fun getItem(position: Int): VideoModel? {
@@ -43,7 +62,7 @@ class VideoAdapter(var context: Context) : BaseAdapter() {
 
     }
 
-    override fun getItemId(position: Int):Long  {
+    override fun getItemId(position: Int): Long {
         return position.toLong()
     }
 
@@ -51,4 +70,9 @@ class VideoAdapter(var context: Context) : BaseAdapter() {
         return videoList.size
     }
 
+    fun getImg(url: String): Bitmap {
+        val media = MediaMetadataRetriever()
+        media.setDataSource(url, Hashtable<String, String>())
+        return media.getFrameAtTime(0, MediaMetadataRetriever.OPTION_CLOSEST_SYNC)
+    }
 }

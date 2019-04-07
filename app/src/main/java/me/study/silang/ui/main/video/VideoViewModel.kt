@@ -30,13 +30,31 @@ class VideoViewModel(val context: Context) : BaseViewModel() {
     val label = ObservableField<String>()
     val page = ObservableField<Page>()
 
-    var videoAdapter: VideoAdapter = VideoAdapter(context)
+    lateinit var videoAdapter: VideoAdapter
 
     var service: VideoRepository =
         (RetrofitManager.getInstance<VideoRepository>(
             context,
             VideoRepository::class.java
         ).service as VideoRepository?)!!
+
+    fun initVideo() {
+        service.list(Param().page(0).pageSize(10))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : RetrofitCallback<Any>() {
+                override fun onSuccess(model: Any?) {
+                    page.set(Page())
+                    videoAdapter.init(model as List<VideoModel>)
+                    Page(page.get()!!.page + page.get()!!.pageSize, page.get()!!.pageSize + 10)
+                        .also { p -> page.set(p) }
+                }
+
+                override fun onFailure(msg: String?) {
+
+                }
+            })
+    }
 
     fun selectVideo() {
         service.list(Param().page(page.get()!!.page).pageSize(page.get()!!.pageSize))
@@ -80,6 +98,7 @@ class VideoViewModel(val context: Context) : BaseViewModel() {
                                     override fun onSuccess(model: Any?) {
                                         Toast.makeText(context, "success", Toast.LENGTH_SHORT).show()
                                         addStatus.set(false)
+                                        initVideo()
                                     }
 
                                     override fun onFailure(msg: String?) {
@@ -101,7 +120,7 @@ class VideoViewModel(val context: Context) : BaseViewModel() {
 
     init {
         addStatus.set(false)
-        page.set(Page())
+
     }
 
     companion object {
