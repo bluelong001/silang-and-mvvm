@@ -1,6 +1,7 @@
 package me.study.silang.entity
 
 import java.io.Serializable
+import java.util.*
 
 /**
  *
@@ -15,16 +16,23 @@ class User : Serializable {
 
     var id: Int? = null
 
-    var username: String? = null
+    var username: String? = ""
 
-    var password: String? = null
+    var password: String? = ""
 
-    var displayname: String? = null
+    var displayname: String? = ""
 
-    var headIcon: String? = null
+    var fileId: Int? = null
 
     var role: Int? = null
-
+    init {
+        id=null
+        username=""
+        password=""
+        displayname=""
+        fileId=null
+        role=null
+    }
     companion object {
 
         private const val serialVersionUID = 1L

@@ -4,11 +4,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ListView
+import androidx.recyclerview.widget.RecyclerView
 
-class NoScrollListView : ListView {
+class NoScrollListView : RecyclerView {
 
 
-    constructor(context: Context) : super(context) {}
+    constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
 

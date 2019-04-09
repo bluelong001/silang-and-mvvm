@@ -17,20 +17,29 @@ class Video : Serializable {
 
     var id: Int? = null
 
-    var videoName: String? = null
+    var videoName: String? = ""
 
-    var content: String? = null
+    var content: String? = ""
 
-    var title: String? = null
+    var title: String? = ""
 
-    var gmtCreate: Date? = null
+    var gmtCreate: Date? = Date()
 
-    var gmtUpdate: Date? = null
+    var gmtUpdate: Date? =  Date()
 
     var userId: Int? = null
 
     var fileId: Int? = null
-
+    init {
+        id=null
+        title=""
+        content=""
+        videoName=""
+        fileId=null
+        gmtCreate=Date()
+        gmtUpdate=Date()
+        userId=null
+    }
     companion object {
 
         private const val serialVersionUID = 1L

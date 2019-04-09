@@ -3,16 +3,16 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="me.study.silang.model.PostModel"/>
-        <variable name="model" type="PostModel"/>
+        <import type="me.study.silang.model.ReplyModel"/>
+        <variable name="model" type="ReplyModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout android:orientation="vertical"
                                                        android:layout_width="match_parent"
-                                                       android:layout_height="wrap_content" android:id="@+id/postView">
+                                                       android:layout_height="wrap_content" android:id="@+id/replyView">
 
         <TextView
-                android:text="@{model.title}"
+                android:text="@{model.context}"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:layout_width="0dp"
@@ -22,15 +22,6 @@
                 android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"/>
         <TextView
-                android:text="replyNum:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView7" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/textView6"
-                app:layout_constraintStart_toStartOf="@+id/textView6"
-                android:layout_marginStart="8dp"
-        />
-        <TextView
                 android:text="@{model.gmtUpdate}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,19 +29,13 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/textView6"/>
         <TextView
-                android:text="@{model.replyNum.toString()}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView9" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" app:layout_constraintStart_toEndOf="@+id/textView7"
-                android:layout_marginStart="8dp"/>
-        <TextView
                 android:text="Last Reply Date:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView10" android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@+id/textView6" app:layout_constraintEnd_toStartOf="@+id/textView8"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginEnd="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="16dp"/>
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -58,7 +43,7 @@
                 android:background="@color/secondaryDarkColor" app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/textView7" android:layout_marginTop="16dp">
+        >
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

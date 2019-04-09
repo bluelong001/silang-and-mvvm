@@ -17,16 +17,23 @@ class Reply : Serializable {
 
     var id: Int? = null
 
-    var context: String? = null
+    var context: String? = ""
 
-    var gmtCreate: Date? = null
+    var gmtCreate: Date? =  Date()
 
-    var gmtUpdate: Date? = null
+    var gmtUpdate: Date? =  Date()
 
     var userId: Int? = null
 
     var postId: Int? = null
-
+    init {
+        id=null
+        context=""
+        postId=null
+        gmtCreate=Date()
+        gmtUpdate=Date()
+        userId=null
+    }
     companion object {
 
         private const val serialVersionUID = 1L

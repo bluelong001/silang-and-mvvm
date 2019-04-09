@@ -10,36 +10,74 @@ import me.study.silang.bean.Param
 import me.study.silang.entity.Post
 import me.study.silang.http.RetrofitCallback
 import me.study.silang.http.RetrofitManager
+import me.study.silang.model.PostModel
 import me.study.silang.repository.BBSRepository
-import me.study.silang.ui.main.video.VideoModel
+import me.study.silang.utils.AnyCallback
 
 class BBSViewModel(val context: Context) : BaseViewModel() {
-    var page = ObservableField<Page>()
-
+    var page = Page()
     var service: BBSRepository =
         (RetrofitManager.getInstance<BBSRepository>(context, BBSRepository::class.java).service as BBSRepository?)!!
 
-    lateinit var postListAdapter:PostListAdapter
+    lateinit var postListAdapter: PostListAdapter
 
-    fun initPostList() {
-        service.list(Param().page(0).pageSize(10))
+    fun listMorePostList(callback:AnyCallback?) {
+        page.next()
+        service.list(Param().page(page.page).pageSize(page.pageSize))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : RetrofitCallback<Any>() {
                 override fun onSuccess(model: Any?) {
-                    page.set(Page())
-                    postListAdapter.items.clear()
                     postListAdapter.items.addAll(model as List<PostModel>)
-                    Page(page.get()!!.page + page.get()!!.pageSize, page.get()!!.pageSize + 10)
-                        .also { p -> page.set(p) }
+
+                    callback?.callback()
                 }
 
                 override fun onFailure(msg: String?) {
-
+                    page.back()
                 }
             })
     }
 
+    fun initPostList(callback:AnyCallback?) {
+        page=Page()
+        page.next()
+        service.list(Param().page(page.page).pageSize(page.pageSize))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : RetrofitCallback<Any>() {
+                override fun onSuccess(model: Any?) {
+                    postListAdapter.items.clear()
+                    postListAdapter.items.addAll(model as List<PostModel>)
 
+                    callback?.callback()
+                }
+
+                override fun onFailure(msg: String?) {
+                    page.back()
+                }
+            })
+    }
+
+    fun reset(callback:AnyCallback?) {
+        page=Page()
+        page.next()
+        service.list(Param().page(page.page).pageSize(page.pageSize))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : RetrofitCallback<Any>() {
+                override fun onSuccess(model: Any?) {
+
+                    callback?.callback()
+                }
+
+                override fun onFailure(msg: String?) {
+                    page.back()
+                }
+            })
+    }
 
 }
+
+
+

@@ -84,7 +84,10 @@ public class Param extends HashMap<String, Object> {
         return obj;
     }
 
-
+    public Param xput(String name,Object value){
+        this.put(name,value);
+        return this;
+    }
     private static String camelToUnderline(String line) {
         if (line == null || "".equals(line)) {
             return "";

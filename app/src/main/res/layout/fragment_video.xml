@@ -6,13 +6,15 @@
         <import type="android.view.View"/>
         <variable name="fragment" type="me.study.silang.ui.main.video.VideoFragment"/>
     </data>
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
 
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:id="@+id/constraintLayout7">
+                android:layout_height="match_parent" android:id="@+id/constraintLayout7"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent">
 
             <GridView
                     android:background="#FFF"
@@ -31,24 +33,49 @@
                     android:id="@+id/sv_video">
             </SearchView>
         </androidx.constraintlayout.widget.ConstraintLayout>
+        <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="#20000000"
+                android:onClick="@{()->fragment.closeAddDialog()}"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/dialog_add_back"
+                android:visibility="@{fragment.vm.addStatus ?  View.VISIBLE:View.GONE }"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/dialog_add">
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+            </LinearLayout>
+        </ScrollView>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true" app:srcCompat="@drawable/ic_add_white_48dp"
+                android:id="@+id/btn_video_add"
+                android:onClick="@{()->fragment.showAddDialog()}"
+                android:visibility="@{fragment.vm.addStatus ? View.GONE :View.VISIBLE }"
+                android:layout_marginEnd="32dp"
+                android:layout_gravity="bottom|right" tools:ignore="RtlHardcoded" android:focusable="true"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="32dp"
+                app:layout_constraintBottom_toBottomOf="parent"/>
         <androidx.constraintlayout.widget.ConstraintLayout android:orientation="vertical"
-                                                           android:background="#20000000"
+                                                           android:layout_gravity="bottom"
+
                                                            android:layout_width="match_parent"
-                                                           android:layout_height="match_parent"
+                                                           android:layout_height="wrap_content"
                                                            android:clickable="true"
                                                            android:visibility="@{fragment.vm.addStatus ?  View.VISIBLE:View.GONE }"
-                                                           android:id="@+id/dialog_add" android:focusable="true">
-            <FrameLayout
-                    android:layout_width="0dp"
-                    android:onClick="@{()->fragment.closeAddDialog()}"
-                    android:layout_height="0dp" app:layout_constraintBottom_toTopOf="@+id/constraintLayout6"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" android:id="@+id/dialog_add_back">
+                                                           android:id="@+id/dialog_add" android:focusable="true"
+                                                           app:layout_constraintBottom_toBottomOf="parent"
+                                                           app:layout_constraintStart_toStartOf="parent"
+                                                           app:layout_constraintEnd_toEndOf="parent">
 
-            </FrameLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:background="#FFF"
+                    android:layout_gravity="bottom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
@@ -59,10 +86,8 @@
                         android:layout_height="60dp" app:srcCompat="@drawable/ic_add_black_48dp"
                         android:id="@+id/findVideo"
                         android:onClick="@{()->fragment.addVideo()}"
-                        android:layout_marginBottom="8dp"
-                        app:layout_constraintBottom_toTopOf="@+id/upload"
                         app:layout_constraintStart_toEndOf="@+id/label" android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/edLabel"/>
+                        android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                         android:text="Label:"
@@ -77,38 +102,33 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/edLabel"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="8dp"
                         android:layout_marginStart="8dp" app:layout_constraintStart_toEndOf="@+id/label"
-                        app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="32dp"/>
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="32dp" app:layout_constraintTop_toBottomOf="@+id/findVideo"
+                        android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
                 <TextView
                         android:text="Video:"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/textView12"
                         app:layout_constraintEnd_toEndOf="@+id/label"
-                        app:layout_constraintBottom_toBottomOf="@+id/findVideo" android:layout_marginBottom="8dp"/>
+                        app:layout_constraintBottom_toBottomOf="@+id/findVideo"
+                        android:layout_marginBottom="8dp"/>
                 <Button
                         android:text="upload"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:clickable="@{fragment.vm.videoUri!=null}"
-                        android:layout_height="0dp" android:id="@+id/upload"
-                        app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="24dp"
-                        android:onClick="@{()->fragment.vm.insertVideo()}"
-                        app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="24dp"/>
+                        android:layout_height="wrap_content" android:id="@+id/upload"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintEnd_toEndOf="@+id/edLabel"
+                        android:onClick="@{()->fragment.upload()}"
+                        android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/findVideo"
+                        app:layout_constraintBottom_toTopOf="@+id/edLabel" android:layout_marginStart="32dp"
+                        app:layout_constraintHorizontal_bias="1.0"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true" app:srcCompat="@drawable/ic_add_white_48dp"
-                android:id="@+id/btn_video_add"
-                android:onClick="@{()->fragment.showAddDialog()}"
-                android:layout_marginBottom="32dp"
-                android:visibility="@{fragment.vm.addStatus ? View.GONE :View.VISIBLE }"
-                android:layout_marginEnd="32dp"
-                android:layout_gravity="bottom|right" tools:ignore="RtlHardcoded" android:focusable="true"/>
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

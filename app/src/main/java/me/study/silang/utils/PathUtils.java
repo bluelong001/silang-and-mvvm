@@ -14,7 +14,9 @@ import android.provider.MediaStore;
 import java.io.File;
 
 public class PathUtils {
+
     public static String getRealFilePath(Context context, final Uri uri) {
+
         if (null == uri)
             return null;
         final String scheme = uri.getScheme();

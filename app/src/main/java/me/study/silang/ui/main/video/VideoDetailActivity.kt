@@ -1,23 +1,21 @@
 package me.study.silang.ui.main.video
 
-import android.content.Intent
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_video_detail.*
-import me.study.silang.R
-import me.study.silang.base.activity.BaseActivity
-import me.study.silang.databinding.ActivityVideoDetailBinding
-import com.shuyu.gsyvideoplayer.listener.LockClickListener
-import com.shuyu.gsyvideoplayer.utils.Debuger
-import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
-import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
-import com.shuyu.gsyvideoplayer.utils.OrientationUtils
-import com.shuyu.gsyvideoplayer.GSYVideoManager
-import android.view.View
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
+import android.view.View
 import android.widget.ImageView
+import com.google.gson.Gson
+import com.shuyu.gsyvideoplayer.GSYVideoManager
+import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
+import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
+import com.shuyu.gsyvideoplayer.utils.Debuger
+import com.shuyu.gsyvideoplayer.utils.OrientationUtils
+import kotlinx.android.synthetic.main.activity_video_detail.*
+import me.study.silang.base.activity.BaseActivity
+import me.study.silang.databinding.ActivityVideoDetailBinding
+import me.study.silang.model.VideoModel
 import java.util.*
-import android.content.res.Configuration
 
 class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
     override val layoutId = me.study.silang.R.layout.activity_video_detail
@@ -104,13 +102,13 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
 
 
     override fun onPause() {
-        detailPlayer.getCurrentPlayer().onVideoPause()
+        detailPlayer.currentPlayer.onVideoPause()
         super.onPause()
         isPause = true
     }
 
     override fun onResume() {
-        detailPlayer.getCurrentPlayer().onVideoResume(false)
+        detailPlayer.currentPlayer.onVideoResume(false)
         super.onResume()
         isPause = false
     }
@@ -118,7 +116,7 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
     override fun onDestroy() {
         super.onDestroy()
         if (isPlay) {
-            detailPlayer.getCurrentPlayer().release()
+            detailPlayer.currentPlayer.release()
         }
         if (orientationUtils != null)
             orientationUtils.releaseListener()

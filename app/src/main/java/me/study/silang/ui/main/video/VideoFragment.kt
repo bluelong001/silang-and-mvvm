@@ -1,28 +1,27 @@
 package me.study.silang.ui.main.video
 
 import android.app.Activity.RESULT_OK
-import me.study.silang.R
-import me.study.silang.base.fragment.BaseFragment
-import me.study.silang.databinding.FragmentVideoBinding
-import android.content.pm.ActivityInfo
-import com.zhihu.matisse.Matisse
-import com.zhihu.matisse.MimeType
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.media.MediaMetadataRetriever
 import android.provider.MediaStore
-import android.net.Uri
-import android.os.Environment
-import android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE
-import android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO
-import androidx.appcompat.app.AlertDialog
 import android.util.Log
 import android.view.View
-import androidx.core.content.FileProvider
+import android.widget.AbsListView
+import androidx.appcompat.app.AlertDialog
+import androidx.core.graphics.drawable.toBitmap
 import com.google.gson.Gson
+import com.zhihu.matisse.Matisse
+import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.internal.utils.PathUtils
 import kotlinx.android.synthetic.main.fragment_video.*
+import me.study.silang.R
+import me.study.silang.base.fragment.BaseFragment
 import me.study.silang.component.Glide4Engine
+import me.study.silang.databinding.FragmentVideoBinding
+import me.study.silang.model.VideoModel
+import me.study.silang.utils.AnyCallback
 import java.io.File
-import java.nio.file.Files.exists
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -50,9 +49,41 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoAdapter.Callbac
         vm.videoAdapter = VideoAdapter(mContext, this)
         vm.initVideo()
         gv_video.adapter = vm.videoAdapter
+        // 监听listview滚到最底部
+        gv_video.setOnScrollListener(object : AbsListView.OnScrollListener {
+            override fun onScroll(
+                view: AbsListView?,
+                firstVisibleItem: Int,
+                visibleItemCount: Int,
+                totalItemCount: Int
+            ) {
+
+            }
+
+            override fun onScrollStateChanged(view: AbsListView?, scrollState: Int) {
+                when (scrollState) {
+                    // 当不滚动时
+                    AbsListView.OnScrollListener.SCROLL_STATE_IDLE ->
+                        // 判断滚动到底部
+                        if (view!!.lastVisiblePosition === view!!.count - 1&&!vm.isTotal) {
+                            vm.selectVideo()
+                        }
+                }
+            }
+        })
     }
 
 
+    fun upload(){
+        vm.insertVideo(object : AnyCallback() {
+            override fun callback() {
+                findVideo.setImageBitmap(resources.getDrawable(R.drawable.ic_add_black_48dp).toBitmap())
+                vm.videoUri.set(null)
+                vm.label.set(null)
+            }
+
+        })
+    }
     fun closeAddDialog() {
         vm.addStatus.set(false)
     }
@@ -95,10 +126,16 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoAdapter.Callbac
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
-        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
-            vm.videoUri.set(Matisse.obtainResult(intent!!)[0])
-        } else if (requestCode == REQUEST_CODE_MAKE && resultCode == RESULT_OK) {
-            vm.videoUri.set(intent!!.data)
+        if(requestCode== RESULT_OK) {
+            if (requestCode == REQUEST_CODE_CHOOSE) {
+                vm.videoUri.set(Matisse.obtainResult(intent!!)[0])
+            } else if (requestCode == REQUEST_CODE_MAKE) {
+                vm.videoUri.set(intent!!.data)
+            }
+            val media = MediaMetadataRetriever()
+            val out = File(PathUtils.getPath(context, vm.videoUri.get()!!))
+            media.setDataSource(out.path)
+            findVideo.setImageBitmap(media.getFrameAtTime(0, MediaMetadataRetriever.OPTION_CLOSEST_SYNC))
         }
         Log.d(TAG, vm.videoUri.toString())
     }

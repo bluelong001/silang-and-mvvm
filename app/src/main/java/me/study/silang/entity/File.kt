@@ -1,6 +1,7 @@
 package me.study.silang.entity
 
 import java.io.Serializable
+import java.util.*
 
 /**
  *
@@ -15,10 +16,14 @@ class File : Serializable {
 
     var id: Int? = null
 
-    var type: String? = null
+    var type: String? = ""
 
-    var fileName: String? = null
-
+    var fileName: String? = ""
+    init {
+        id=null
+        type=""
+        fileName=""
+    }
     companion object {
 
         private const val serialVersionUID = 1L

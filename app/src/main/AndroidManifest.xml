@@ -32,7 +32,8 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".ui.MainActivity">
+                android:name=".ui.MainActivity"
+                android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
 
         </activity>
         <activity android:name=".ui.main.bbs.PostDetailActivity"
@@ -41,7 +42,8 @@
         <activity android:name=".ui.main.bbs.PostNewActivity"
                   android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
         </activity>
-        <activity android:name=".ui.main.video.VideoDetailActivity"/>
+        <activity android:name=".ui.main.video.VideoDetailActivity"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
 
         <provider
                 android:name="androidx.core.content.FileProvider"

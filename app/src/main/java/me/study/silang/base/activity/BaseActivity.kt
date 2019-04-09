@@ -1,6 +1,5 @@
 package me.study.silang.base.activity
 
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -15,7 +14,6 @@ abstract class BaseActivity<B : ViewDataBinding> :   AppCompatActivity() {
     protected lateinit var binding: B
 
     abstract val layoutId: Int
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         hideStatusBar()

@@ -8,9 +8,17 @@ import kotlinx.android.synthetic.main.fragment_bbs.*
 import me.study.silang.R
 import me.study.silang.base.fragment.BaseFragment
 import me.study.silang.databinding.FragmentBbsBinding
+import me.study.silang.model.PostModel
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.jcodecraeer.xrecyclerview.XRecyclerView
+import android.annotation.SuppressLint
+import me.study.silang.bean.Page
+import me.study.silang.http.RetrofitCallback
+import me.study.silang.utils.AnyCallback
+import java.util.logging.Handler
 
 
-class BBSFragment : BaseFragment<FragmentBbsBinding>() ,PostListAdapter.Callback{
+class BBSFragment : BaseFragment<FragmentBbsBinding>(), PostListAdapter.Callback {
 
     lateinit var vm: BBSViewModel
     override val layoutId: Int = R.layout.fragment_bbs
@@ -23,12 +31,40 @@ class BBSFragment : BaseFragment<FragmentBbsBinding>() ,PostListAdapter.Callback
         }
     }
 
+    @SuppressLint("WrongConstant")
     override fun initView() {
-        vm= BBSViewModel(mContext)
-        vm.postListAdapter = PostListAdapter(mContext,this)
+        vm = BBSViewModel(mContext)
+        vm.postListAdapter = PostListAdapter(mContext, this)
+        vm.initPostList(null)
+        val layoutManager = LinearLayoutManager(activity)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        rvPost.layoutManager = layoutManager
         rvPost.adapter = vm.postListAdapter
+        rvPost.setLoadingListener(object : XRecyclerView.LoadingListener {
+            override fun onRefresh() {
+                vm.reset(object : AnyCallback() {
+                    override fun callback() {
+                        vm.postListAdapter = PostListAdapter(mContext, this@BBSFragment)
+                        vm.initPostList(null)
+//                        rvPost.layoutManager = layoutManager
+                        rvPost.adapter = vm.postListAdapter
+                        rvPost.refreshComplete()
+
+                    }
+                })
+            }
+
+            override fun onLoadMore() {
+                vm.listMorePostList(object : AnyCallback() {
+                    override fun callback() {
+                        rvPost.loadMoreComplete()
+                    }
+                })
+            }
+        })
     }
 
+    var unit: () -> Unit = { var a = 1 }
     fun newPost() {
         Intent(activity, PostNewActivity::class.java).also { intent ->
             startActivityForResult(intent, REQUEST_CODE_NEW_POST)
@@ -38,6 +74,7 @@ class BBSFragment : BaseFragment<FragmentBbsBinding>() ,PostListAdapter.Callback
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
         if (requestCode == REQUEST_CODE_NEW_POST && resultCode == Activity.RESULT_OK) {
+            vm.initPostList(null)
         }
 
     }

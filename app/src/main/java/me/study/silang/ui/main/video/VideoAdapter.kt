@@ -12,6 +12,7 @@ import me.study.silang.databinding.ListItemVideoBinding
 import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
 import me.study.silang.generated.callback.OnClickListener
+import me.study.silang.model.VideoModel
 import java.util.*
 
 

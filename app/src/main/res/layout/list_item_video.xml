@@ -3,7 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="me.study.silang.ui.main.video.VideoModel"/>
+        <import type="me.study.silang.model.VideoModel"/>
         <variable name="model" type="VideoModel"/>
     </data>
 
@@ -39,6 +39,8 @@
                 <TextView
                         android:text="@{model.title}"
                         android:layout_width="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
                         android:layout_height="wrap_content" android:id="@+id/tvTitle"
                         app:layout_constraintTop_toBottomOf="@+id/video" app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"

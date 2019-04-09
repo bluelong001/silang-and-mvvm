@@ -4,8 +4,7 @@ import android.content.Context
 import android.view.View
 import me.study.silang.R
 import me.study.silang.base.adapter.BaseBindingAdapter
-import me.study.silang.entity.Post
-import me.study.silang.ui.main.video.VideoAdapter
+import me.study.silang.model.PostModel
 
 class PostListAdapter(context: Context,var callback: PostListAdapter.Callback) :
     BaseBindingAdapter<PostModel, me.study.silang.databinding.ListItemPostBinding>(context) {
@@ -16,6 +15,7 @@ class PostListAdapter(context: Context,var callback: PostListAdapter.Callback) :
         if (binding != null) {
             binding.postView.setOnClickListener { view->callback.click(view) }
             binding.model=item
+            binding.postView.tag=item
             binding.executePendingBindings()
         }
     }

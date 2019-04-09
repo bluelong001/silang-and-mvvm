@@ -4,10 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
-import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
-import androidx.databinding.ObservableList
-import androidx.databinding.ObservableMap
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import me.study.silang.base.videomodel.BaseViewModel
@@ -16,7 +13,9 @@ import me.study.silang.bean.Param
 import me.study.silang.entity.Video
 import me.study.silang.http.RetrofitCallback
 import me.study.silang.http.RetrofitManager
+import me.study.silang.model.VideoModel
 import me.study.silang.repository.VideoRepository
+import me.study.silang.utils.AnyCallback
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -28,7 +27,8 @@ class VideoViewModel(val context: Context) : BaseViewModel() {
     val addStatus = ObservableField<Boolean>()
     val videoUri = ObservableField<Uri>()
     val label = ObservableField<String>()
-    val page = ObservableField<Page>()
+    var page: Page = Page()
+    var isTotal: Boolean = false
 
     lateinit var videoAdapter: VideoAdapter
 
@@ -39,42 +39,42 @@ class VideoViewModel(val context: Context) : BaseViewModel() {
         ).service as VideoRepository?)!!
 
     fun initVideo() {
-        service.list(Param().page(0).pageSize(10))
+        page = Page()
+        page.next()
+        service.list(Param().page(page.page).pageSize(page.pageSize))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : RetrofitCallback<Any>() {
                 override fun onSuccess(model: Any?) {
-                    page.set(Page())
                     videoAdapter.init(model as List<VideoModel>)
-                    Page(page.get()!!.page + page.get()!!.pageSize, page.get()!!.pageSize + 10)
-                        .also { p -> page.set(p) }
+
                 }
 
                 override fun onFailure(msg: String?) {
-
+                    page.back()
                 }
             })
     }
 
     fun selectVideo() {
-        service.list(Param().page(page.get()!!.page).pageSize(page.get()!!.pageSize))
+        page.next()
+        service.list(Param().page(page.page).pageSize(page.pageSize))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : RetrofitCallback<Any>() {
                 override fun onSuccess(model: Any?) {
-
                     videoAdapter.addAll(model as List<VideoModel>)
-                    Page(page.get()!!.page + page.get()!!.pageSize, page.get()!!.pageSize + 10)
-                        .also { p -> page.set(p) }
+                    if (model.size <= 0) isTotal = true
+
                 }
 
                 override fun onFailure(msg: String?) {
-
+                    page.back()
                 }
             })
     }
 
-    fun insertVideo() {
+    fun insertVideo(callback:AnyCallback?) {
         val out = File(com.zhihu.matisse.internal.utils.PathUtils.getPath(context, videoUri.get()!!))
         val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), out)
         val file = MultipartBody.Part.createFormData("file", out.name, requestFile)
@@ -99,6 +99,7 @@ class VideoViewModel(val context: Context) : BaseViewModel() {
                                         Toast.makeText(context, "success", Toast.LENGTH_SHORT).show()
                                         addStatus.set(false)
                                         initVideo()
+                                        callback?.callback()
                                     }
 
                                     override fun onFailure(msg: String?) {
@@ -120,7 +121,6 @@ class VideoViewModel(val context: Context) : BaseViewModel() {
 
     init {
         addStatus.set(false)
-
     }
 
     companion object {
