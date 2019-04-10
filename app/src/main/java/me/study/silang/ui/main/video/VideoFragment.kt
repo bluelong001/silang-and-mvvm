@@ -8,8 +8,10 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.AbsListView
+import android.widget.SearchView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.graphics.drawable.toBitmap
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
@@ -23,9 +25,13 @@ import me.study.silang.model.VideoModel
 import me.study.silang.utils.AnyCallback
 import java.io.File
 import java.util.*
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.jcodecraeer.xrecyclerview.XRecyclerView
+import kotlinx.android.synthetic.main.fragment_bbs.*
+import me.study.silang.ui.main.bbs.PostListAdapter
 
 
-class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoAdapter.Callback {
+class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoListAdapter.Callback {
     override fun click(v: View) {
         var videoInfo: VideoModel = v.tag as VideoModel
         Intent(context, VideoDetailActivity::class.java).also { intent ->
@@ -46,30 +52,42 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoAdapter.Callbac
 
     override fun initView() {
         vm = VideoViewModel(mContext)
-        vm.videoAdapter = VideoAdapter(mContext, this)
-        vm.initVideo()
-        gv_video.adapter = vm.videoAdapter
+        vm.videoListAdapter = VideoListAdapter(mContext, this)
+        vm.initVideo(null)
+        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+// 绑定布局管理器
+        gv_video.layoutManager = layoutManager
+        gv_video.adapter = vm.videoListAdapter
         // 监听listview滚到最底部
-        gv_video.setOnScrollListener(object : AbsListView.OnScrollListener {
-            override fun onScroll(
-                view: AbsListView?,
-                firstVisibleItem: Int,
-                visibleItemCount: Int,
-                totalItemCount: Int
-            ) {
+        gv_video.setLoadingListener(object : XRecyclerView.LoadingListener {
+            override fun onRefresh() {
+//                vm.videoListAdapter = VideoListAdapter(mContext, this@VideoFragment)
+                vm.initVideo(object : AnyCallback() {
+                    override fun callback() {
+//                        gv_video.adapter = vm.videoListAdapter
+                        gv_video.refreshComplete()
 
+                    }
+                })
+            }
+            override fun onLoadMore() {
+                vm.selectVideo(object : AnyCallback() {
+                    override fun callback() {
+                        gv_video.loadMoreComplete()
+                    }
+                })
+            }
+        })
+        sv_video.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                vm.query(query!!)
+                return false
             }
 
-            override fun onScrollStateChanged(view: AbsListView?, scrollState: Int) {
-                when (scrollState) {
-                    // 当不滚动时
-                    AbsListView.OnScrollListener.SCROLL_STATE_IDLE ->
-                        // 判断滚动到底部
-                        if (view!!.lastVisiblePosition === view!!.count - 1&&!vm.isTotal) {
-                            vm.selectVideo()
-                        }
-                }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
             }
+
         })
     }
 

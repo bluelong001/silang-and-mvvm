@@ -10,7 +10,7 @@ class Page {
     }
 
     constructor() {
-        this.page = 0L
+        this.page = 1L
         this.pageSize = 9L
     }
 

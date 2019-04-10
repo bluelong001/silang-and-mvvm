@@ -30,7 +30,7 @@ class VideoViewModel(val context: Context) : BaseViewModel() {
     var page: Page = Page()
     var isTotal: Boolean = false
 
-    lateinit var videoAdapter: VideoAdapter
+    lateinit var videoListAdapter: VideoListAdapter
 
     var service: VideoRepository =
         (RetrofitManager.getInstance<VideoRepository>(
@@ -38,43 +38,46 @@ class VideoViewModel(val context: Context) : BaseViewModel() {
             VideoRepository::class.java
         ).service as VideoRepository?)!!
 
-    fun initVideo() {
+    fun initVideo(callback: AnyCallback?) {
         page = Page()
-        page.next()
+
         service.list(Param().page(page.page).pageSize(page.pageSize))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : RetrofitCallback<Any>() {
                 override fun onSuccess(model: Any?) {
-                    videoAdapter.init(model as List<VideoModel>)
-
+                    videoListAdapter.items.clear()
+                    videoListAdapter.items.addAll(model as List<VideoModel>)
+                    callback?.callback()
                 }
 
                 override fun onFailure(msg: String?) {
                     page.back()
                 }
             })
+        page.next()
     }
 
-    fun selectVideo() {
-        page.next()
+    fun selectVideo(callback: AnyCallback?) {
+
         service.list(Param().page(page.page).pageSize(page.pageSize))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : RetrofitCallback<Any>() {
                 override fun onSuccess(model: Any?) {
-                    videoAdapter.addAll(model as List<VideoModel>)
+                    videoListAdapter.items.addAll(model as List<VideoModel>)
                     if (model.size <= 0) isTotal = true
-
+                    callback?.callback()
                 }
 
                 override fun onFailure(msg: String?) {
                     page.back()
                 }
             })
+        page.next()
     }
 
-    fun insertVideo(callback:AnyCallback?) {
+    fun insertVideo(callback: AnyCallback?) {
         val out = File(com.zhihu.matisse.internal.utils.PathUtils.getPath(context, videoUri.get()!!))
         val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), out)
         val file = MultipartBody.Part.createFormData("file", out.name, requestFile)
@@ -98,7 +101,7 @@ class VideoViewModel(val context: Context) : BaseViewModel() {
                                     override fun onSuccess(model: Any?) {
                                         Toast.makeText(context, "success", Toast.LENGTH_SHORT).show()
                                         addStatus.set(false)
-                                        initVideo()
+                                        initVideo(null)
                                         callback?.callback()
                                     }
 
@@ -117,6 +120,22 @@ class VideoViewModel(val context: Context) : BaseViewModel() {
                 }
             })
 
+    }
+
+    fun query(queryField: String) {
+
+                ArrayList<VideoModel>().also { arr ->
+                    run {
+                        videoListAdapter.items.forEach { model ->
+                            if (model.title.contains(queryField))
+                                arr.add(model)
+                        }
+                        videoListAdapter.items.clear()
+                        videoListAdapter.items.addAll(arr)
+                    }
+//        videoListAdapter.items.removeIf { videomodel-> videomodel.title.contentEquals(queryField)}
+
+        }
     }
 
     init {

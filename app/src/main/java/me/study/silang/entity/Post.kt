@@ -12,7 +12,7 @@ import java.util.*
  * @author Me
  * @since 2019-03-24
  */
-class Post() : Serializable {
+class Post : Serializable {
 
     var id: Int? = null
 

@@ -42,11 +42,9 @@ class BBSFragment : BaseFragment<FragmentBbsBinding>(), PostListAdapter.Callback
         rvPost.adapter = vm.postListAdapter
         rvPost.setLoadingListener(object : XRecyclerView.LoadingListener {
             override fun onRefresh() {
+                vm.postListAdapter = PostListAdapter(mContext, this@BBSFragment)
                 vm.reset(object : AnyCallback() {
                     override fun callback() {
-                        vm.postListAdapter = PostListAdapter(mContext, this@BBSFragment)
-                        vm.initPostList(null)
-//                        rvPost.layoutManager = layoutManager
                         rvPost.adapter = vm.postListAdapter
                         rvPost.refreshComplete()
 
@@ -64,7 +62,6 @@ class BBSFragment : BaseFragment<FragmentBbsBinding>(), PostListAdapter.Callback
         })
     }
 
-    var unit: () -> Unit = { var a = 1 }
     fun newPost() {
         Intent(activity, PostNewActivity::class.java).also { intent ->
             startActivityForResult(intent, REQUEST_CODE_NEW_POST)

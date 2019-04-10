@@ -22,7 +22,7 @@ class BBSViewModel(val context: Context) : BaseViewModel() {
     lateinit var postListAdapter: PostListAdapter
 
     fun listMorePostList(callback:AnyCallback?) {
-        page.next()
+
         service.list(Param().page(page.page).pageSize(page.pageSize))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -37,11 +37,12 @@ class BBSViewModel(val context: Context) : BaseViewModel() {
                     page.back()
                 }
             })
+        page.next()
     }
 
     fun initPostList(callback:AnyCallback?) {
         page=Page()
-        page.next()
+
         service.list(Param().page(page.page).pageSize(page.pageSize))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -57,17 +58,19 @@ class BBSViewModel(val context: Context) : BaseViewModel() {
                     page.back()
                 }
             })
+        page.next()
     }
 
     fun reset(callback:AnyCallback?) {
         page=Page()
-        page.next()
+
         service.list(Param().page(page.page).pageSize(page.pageSize))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : RetrofitCallback<Any>() {
                 override fun onSuccess(model: Any?) {
-
+                    postListAdapter.items.clear()
+                    postListAdapter.items.addAll(model as List<PostModel>)
                     callback?.callback()
                 }
 
@@ -75,7 +78,10 @@ class BBSViewModel(val context: Context) : BaseViewModel() {
                     page.back()
                 }
             })
+        page.next()
     }
+
+
 
 }
 
