@@ -7,7 +7,7 @@
 
         <variable
                 name="fragment"
-                type="me.study.silang.ui.login.LoginFragment"/>
+                type="me.study.silang.ui.login.register.RegisterFragment"/>
 
 
     </data>
@@ -45,11 +45,32 @@
                 app:layout_constraintEnd_toEndOf="@+id/img_logo" android:layout_marginEnd="8dp"
                 app:layout_constraintStart_toStartOf="@+id/img_logo"
                 app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0">
+            <TextView
+                    android:text="Sign in"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btn_sign_in" android:onClick="@{()->fragment.signin()}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn_register" android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/til_password"
+                    app:layout_constraintVertical_bias="0.0" android:layout_marginStart="4dp"/>
             <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/til_username" android:layout_marginTop="8dp"
+                    android:id="@+id/til_displayname" android:layout_marginTop="8dp"
                     app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={fragment.vm.displayname}"
+                        android:hint="DisplayName" android:id="@+id/text_displayname"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/til_username"
+                    app:layout_constraintTop_toBottomOf="@+id/til_displayname">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -70,23 +91,14 @@
                         android:hint="Password" android:id="@+id/text_password"/>
             </com.google.android.material.textfield.TextInputLayout>
             <Button
-                    android:text="Login"
+                    android:text="Register"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/btn_login"
+                    android:layout_height="wrap_content" android:id="@+id/btn_register"
                     android:layout_marginTop="8dp"
-                    android:onClick="@{()->fragment.login()}"
+                    android:onClick="@{()->fragment.register()}"
                     app:layout_constraintTop_toBottomOf="@+id/til_password" android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
-            <TextView
-                    android:text="Sign up"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/btn_sign_up" android:onClick="@{()->fragment.signup()}"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@+id/btn_register" android:layout_marginBottom="8dp"
-                    android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/til_password"
-                    app:layout_constraintVertical_bias="0.0" android:layout_marginStart="4dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

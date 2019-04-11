@@ -11,11 +11,13 @@ import me.study.silang.entity.Post
 import me.study.silang.http.RetrofitCallback
 import me.study.silang.http.RetrofitManager
 import me.study.silang.model.PostModel
+import me.study.silang.model.UserData
 import me.study.silang.repository.BBSRepository
 import me.study.silang.utils.AnyCallback
 
 class BBSViewModel(val context: Context) : BaseViewModel() {
     var page = Page()
+    var userBBSData = ObservableField<UserData>()
     var service: BBSRepository =
         (RetrofitManager.getInstance<BBSRepository>(context, BBSRepository::class.java).service as BBSRepository?)!!
 
@@ -42,7 +44,19 @@ class BBSViewModel(val context: Context) : BaseViewModel() {
 
     fun initPostList(callback:AnyCallback?) {
         page=Page()
+        service.getUserData()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : RetrofitCallback<Any>() {
+                override fun onSuccess(data: Any?) {
+                    userBBSData.set(data as UserData)
+//                    callback?.callback()
+                }
 
+                override fun onFailure(msg: String?) {
+
+                }
+            })
         service.list(Param().page(page.page).pageSize(page.pageSize))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

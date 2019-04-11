@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import me.study.silang.bean.Param;
 import me.study.silang.bean.Rest;
 import me.study.silang.repository.LoginRepository;
 
@@ -31,7 +32,13 @@ public class RetrofitManager<S> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(callback);
     }
-
+    public static void register(Param param, RetrofitCallback callback) {
+        RetrofitHelper retrofitHelper = new RetrofitHelper();
+        retrofitHelper.createService(LoginRepository.class, null).register(param)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(callback);
+    }
     private volatile static RetrofitManager instance;
 
     public static <S> RetrofitManager getInstance(Context context, Class<S> clazz) {

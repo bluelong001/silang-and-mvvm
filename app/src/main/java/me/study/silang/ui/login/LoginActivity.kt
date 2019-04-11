@@ -6,7 +6,9 @@ import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import me.study.silang.R
+import me.study.silang.ui.login.register.RegisterFragment
 import me.study.silang.utils.PermissionUtils
 
 open class LoginActivity : AppCompatActivity() {
@@ -19,15 +21,13 @@ open class LoginActivity : AppCompatActivity() {
 
     private fun initFragment() {
         supportFragmentManager.apply {
-            findFragmentByTag(TAG) ?: beginTransaction()
-                .add(R.id.fl_login, LoginFragment(), TAG)
+            findFragmentByTag(TAG_LOGIN) ?: beginTransaction()
+                .add(R.id.fl_login, LoginFragment(), TAG_LOGIN)
                 .commitAllowingStateLoss()
         }
     }
-
     companion object {
-        private const val TAG = "LoginFragment"
-
+        private const val TAG_LOGIN = "LoginFragment"
     }
 
     /** 处理权限请求结果，若未授权，则继续请求  */

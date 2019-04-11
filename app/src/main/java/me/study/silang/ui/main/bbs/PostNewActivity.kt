@@ -1,5 +1,6 @@
 package me.study.silang.ui.main.bbs
 
+import android.app.Activity
 import android.content.Intent
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_post_new.*
@@ -41,6 +42,7 @@ class PostNewActivity : BaseActivity<ActivityPostNewBinding>() {
         }
         vm.insertPost(object : RetrofitCallback<Any>() {
             override fun onSuccess(model: Any?) {
+                setResult(Activity.RESULT_OK)
                 finish()
             }
 

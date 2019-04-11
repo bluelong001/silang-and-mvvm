@@ -144,7 +144,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoListAdapter.Cal
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
-        if(requestCode== RESULT_OK) {
+        if(resultCode== RESULT_OK) {
             if (requestCode == REQUEST_CODE_CHOOSE) {
                 vm.videoUri.set(Matisse.obtainResult(intent!!)[0])
             } else if (requestCode == REQUEST_CODE_MAKE) {

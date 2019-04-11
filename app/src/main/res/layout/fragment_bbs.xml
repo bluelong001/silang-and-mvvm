@@ -3,6 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="me.study.silang.model.UserData"/>
         <variable name="fragment" type="me.study.silang.ui.main.bbs.BBSFragment"/>
     </data>
     <FrameLayout
@@ -62,11 +63,12 @@
                         app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"/>
                 <TextView
-                        android:text="0"
+                        android:id="@+id/readNum"
+                        android:text="@{fragment.vm.userBBSData.readNum}"
                         android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/readNum" app:layout_constraintStart_toEndOf="@+id/tv_read"
+                        app:layout_constraintStart_toEndOf="@+id/tv_read"
                         android:layout_marginStart="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -86,13 +88,14 @@
                         app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"/>
                 <TextView
-                        android:text="0"
+                        android:id="@+id/postNum"
+                        android:text="@{fragment.vm.userBBSData.postNum}"
                         android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" app:layout_constraintStart_toEndOf="@+id/tx_post"
                         android:layout_marginStart="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/postNum"/>
+                        app:layout_constraintBottom_toBottomOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
@@ -109,13 +112,14 @@
                         app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"/>
                 <TextView
-                        android:text="0"
+                        android:id="@+id/replyNum"
+                        android:text="@{fragment.vm.userBBSData.replyNum}"
                         android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@+id/tv_reply"
                         android:layout_marginStart="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/ReplyNum"/>
+                        app:layout_constraintBottom_toBottomOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
