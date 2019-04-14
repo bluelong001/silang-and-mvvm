@@ -27,6 +27,7 @@ class VideoViewModel(val context: Context) : BaseViewModel() {
     val addStatus = ObservableField<Boolean>()
     val videoUri = ObservableField<Uri>()
     val label = ObservableField<String>()
+    val content = ObservableField<String>()
     var page: Page = Page()
     var isTotal: Boolean = false
 
@@ -94,6 +95,7 @@ class VideoViewModel(val context: Context) : BaseViewModel() {
                         run {
                             video.title = label.get()
                             video.fileId = Integer.parseInt(model as String)
+                            video.content = content.get()
                             service.add(Param().putObj(video))
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
@@ -124,15 +126,15 @@ class VideoViewModel(val context: Context) : BaseViewModel() {
 
     fun query(queryField: String) {
 
-                ArrayList<VideoModel>().also { arr ->
-                    run {
-                        videoListAdapter.items.forEach { model ->
-                            if (model.title.contains(queryField))
-                                arr.add(model)
-                        }
-                        videoListAdapter.items.clear()
-                        videoListAdapter.items.addAll(arr)
-                    }
+        ArrayList<VideoModel>().also { arr ->
+            run {
+                videoListAdapter.items.forEach { model ->
+                    if (model.title.contains(queryField))
+                        arr.add(model)
+                }
+                videoListAdapter.items.clear()
+                videoListAdapter.items.addAll(arr)
+            }
 //        videoListAdapter.items.removeIf { videomodel-> videomodel.title.contentEquals(queryField)}
 
         }

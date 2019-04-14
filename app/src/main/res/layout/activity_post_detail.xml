@@ -31,7 +31,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
                         android:background="@color/colorPrimary"
-                        app:title="Post Detail"
+                        app:title="查看主题"
                         app:titleTextColor="@color/white" app:layout_constraintStart_toEndOf="@+id/back"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,35 +61,37 @@
                             android:id="@+id/postDiv">
                         <WebView
                                 android:layout_width="match_parent"
+                                android:background="#00FFFFFF"
                                 android:layout_height="wrap_content" android:id="@+id/vtitle"
                                 app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="8dp"
                                 android:layout_marginStart="8dp" android:layout_marginEnd="8dp"/>
                         <WebView
                                 android:layout_width="match_parent"
+                                android:background="#00FFFFFF"
                                 android:layout_height="wrap_content" android:id="@+id/vcontent"
                                 app:layout_constraintTop_toBottomOf="@+id/vtitle" android:layout_marginTop="8dp"
                                 app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
                                 android:layout_marginStart="8dp" android:layout_marginEnd="8dp"/>
                     </LinearLayout>
                     <TextView
-                            android:text="@string/post_create"
+                            android:text="@{activity.vm.postModel.gmtCreate}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" android:id="@+id/gmtCreate"
                             app:layout_constraintStart_toStartOf="parent"
                             android:layout_marginStart="8dp"
                             app:layout_constraintTop_toBottomOf="@+id/postDiv" android:layout_marginTop="8dp"/>
                     <TextView
-                            android:text="Your God"
+                            android:text="@{activity.vm.postModel.userInfo.displayname}"
                             android:layout_width="wrap_content"
-                            android:layout_height="19dp"
+                            android:layout_height="24dp"
                             android:id="@+id/editor"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
                             android:layout_marginBottom="16dp" android:layout_marginTop="8dp"
                             app:layout_constraintTop_toBottomOf="@+id/postDiv"/>
                     <TextView
-                            android:text="Editor:"
+                            android:text="笔者:"
                             android:layout_width="wrap_content"
                             android:layout_height="24dp"
                             android:id="@+id/tv_editor"

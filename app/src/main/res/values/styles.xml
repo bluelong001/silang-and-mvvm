@@ -18,4 +18,5 @@
         <item name="cardUseCompatPadding">true</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
     </style>
+
 </resources>

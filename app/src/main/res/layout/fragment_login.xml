@@ -55,7 +55,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={fragment.vm.username}"
-                        android:hint="Username" android:id="@+id/text_username"/>
+                        android:hint="账号" android:id="@+id/text_username"/>
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -67,19 +67,48 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={fragment.vm.password}"
-                        android:hint="Password" android:id="@+id/text_password"/>
+                        android:hint="密码" android:id="@+id/text_password"/>
             </com.google.android.material.textfield.TextInputLayout>
-            <Button
-                    android:text="Login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/btn_login"
-                    android:layout_marginTop="8dp"
-                    android:onClick="@{()->fragment.login()}"
-                    app:layout_constraintTop_toBottomOf="@+id/til_password" android:layout_marginBottom="8dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/cl_login"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="0dp"
+                    android:id="@+id/cl_progress"
+                    app:layout_constraintStart_toStartOf="@+id/cl_login"
+                    app:layout_constraintTop_toTopOf="@+id/cl_login" android:layout_marginEnd="8dp">
+
+
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/button2"
+                        app:layout_constraintStart_toStartOf="@+id/cl_progress"
+                        app:layout_constraintTop_toTopOf="@+id/cl_progress"
+                        app:layout_constraintEnd_toEndOf="@+id/cl_progress"
+                        app:layout_constraintBottom_toBottomOf="@+id/cl_progress"
+                />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_width="wrap_content"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/til_password"
+                    android:layout_marginBottom="8dp" android:layout_marginEnd="8dp"
+                    android:id="@+id/cl_login"
+            >
+
+
+                <Button
+                        android:text="登录"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/btn_login"
+                        android:onClick="@{()->fragment.login()}"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <TextView
-                    android:text="Sign up"
+                    android:text="注册"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/btn_sign_up" android:onClick="@{()->fragment.signup()}"
@@ -87,6 +116,18 @@
                     app:layout_constraintBottom_toBottomOf="@+id/btn_register" android:layout_marginBottom="8dp"
                     android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/til_password"
                     app:layout_constraintVertical_bias="0.0" android:layout_marginStart="4dp"/>
+            <ProgressBar
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:progressDrawable="@drawable/progress_bg"
+                    android:id="@+id/progressBar"
+                    app:layout_constraintTop_toTopOf="@+id/cl_progress"
+                    app:layout_constraintEnd_toEndOf="@+id/cl_progress"
+                    app:layout_constraintBottom_toBottomOf="@+id/cl_progress" android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/cl_progress"
+                    android:layout_marginBottom="8dp" android:layout_marginEnd="8dp" android:layout_marginStart="8dp"
+                    android:visibility="invisible"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

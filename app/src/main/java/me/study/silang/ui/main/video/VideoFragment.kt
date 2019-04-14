@@ -1,5 +1,6 @@
 package me.study.silang.ui.main.video
 
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -11,6 +12,7 @@ import android.widget.AbsListView
 import android.widget.SearchView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.graphics.drawable.toBitmap
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.zhihu.matisse.Matisse
@@ -50,21 +52,23 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoListAdapter.Cal
 
     lateinit var vm: VideoViewModel
 
+    @SuppressLint("WrongConstant")
     override fun initView() {
         vm = VideoViewModel(mContext)
         vm.videoListAdapter = VideoListAdapter(mContext, this)
         vm.initVideo(null)
-        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        val layoutManager = LinearLayoutManager(activity)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
 // 绑定布局管理器
         gv_video.layoutManager = layoutManager
         gv_video.adapter = vm.videoListAdapter
         // 监听listview滚到最底部
         gv_video.setLoadingListener(object : XRecyclerView.LoadingListener {
             override fun onRefresh() {
-//                vm.videoListAdapter = VideoListAdapter(mContext, this@VideoFragment)
+                vm.videoListAdapter = VideoListAdapter(mContext, this@VideoFragment)
                 vm.initVideo(object : AnyCallback() {
                     override fun callback() {
-//                        gv_video.adapter = vm.videoListAdapter
+                        gv_video.adapter = vm.videoListAdapter
                         gv_video.refreshComplete()
 
                     }
