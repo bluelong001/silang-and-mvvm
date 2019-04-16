@@ -48,40 +48,40 @@
                                                          app:layout_constraintBottom_toBottomOf="parent"
                                                          android:id="@+id/rvPost"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="@+id/headImg"
-                    app:layout_constraintStart_toEndOf="@+id/headImg" android:layout_marginStart="32dp"
-                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
-                    android:layout_marginTop="32dp" android:id="@+id/cl_read">
+            <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="@+id/headImg"-->
+                    <!--app:layout_constraintStart_toEndOf="@+id/headImg" android:layout_marginStart="32dp"-->
+                    <!--android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"-->
+                    <!--android:layout_marginTop="32dp" android:id="@+id/cl_read">-->
 
-                <TextView
-                        android:text="Read"
-                        android:textColor="@color/white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/tv_read"
-                        app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-                <TextView
-                        android:id="@+id/readNum"
-                        android:text="@{fragment.vm.userBBSData.readNum}"
-                        android:textColor="@color/white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toEndOf="@+id/tv_read"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <!--<TextView-->
+                        <!--android:text="Read"-->
+                        <!--android:textColor="@color/white"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content" android:id="@+id/tv_read"-->
+                        <!--app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"-->
+                        <!--app:layout_constraintBottom_toBottomOf="parent"/>-->
+                <!--<TextView-->
+                        <!--android:id="@+id/readNum"-->
+                        <!--android:text="@{fragment.vm.userBBSData.readNum}"-->
+                        <!--android:textColor="@color/white"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--app:layout_constraintStart_toEndOf="@+id/tv_read"-->
+                        <!--android:layout_marginStart="8dp"-->
+                        <!--app:layout_constraintBottom_toBottomOf="parent"/>-->
+            <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="@+id/headImg"
                     android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
                     android:layout_marginTop="32dp" android:id="@+id/cl_post"
-                    app:layout_constraintStart_toEndOf="@+id/cl_read" android:layout_marginStart="8dp"
-                    app:layout_constraintEnd_toStartOf="@+id/cl_reply" android:layout_marginEnd="8dp">
+                    app:layout_constraintStart_toEndOf="@+id/headImg"
+                    android:layout_marginStart="32dp">
 
                 <TextView
-                        android:text="Post"
+                        android:text="发表数"
                         android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/tx_post"
@@ -95,17 +95,19 @@
                         android:layout_height="wrap_content" app:layout_constraintStart_toEndOf="@+id/tx_post"
                         android:layout_marginStart="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+                        app:layout_constraintBottom_toBottomOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="@+id/headImg"
                     android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
                     android:layout_marginTop="32dp" android:id="@+id/cl_reply"
-                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="32dp">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/cl_post" android:layout_marginEnd="32dp"
+                    android:layout_marginStart="8dp">
 
                 <TextView
-                        android:text="Reply"
+                        android:text="回复数"
                         android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/tv_reply"
@@ -119,7 +121,7 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@+id/tv_reply"
                         android:layout_marginStart="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+                        app:layout_constraintBottom_toBottomOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -132,7 +134,7 @@
                         android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginEnd="8dp" app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginTop="8dp" android:text="New Post"/>
+                        android:layout_marginTop="8dp" android:text="发表新帖子"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>

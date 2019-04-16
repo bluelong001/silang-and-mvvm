@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/nav_down"
+            android:title="下载"
+            android:icon="@drawable/ic_slow_motion_video_deep_purple_50_48dp"/>
+</menu>

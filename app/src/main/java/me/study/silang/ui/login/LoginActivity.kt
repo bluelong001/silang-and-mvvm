@@ -41,7 +41,7 @@ open class LoginActivity : AppCompatActivity() {
     /** Activity执行结果  */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        PermissionUtils.onActivityResult(this, requestCode, resultCode, data)
+        PermissionUtils.onActivityResult(this, requestCode, resultCode, data!!)
     }
 
 

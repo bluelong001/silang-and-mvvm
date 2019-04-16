@@ -46,7 +46,7 @@
                 app:layout_constraintStart_toStartOf="@+id/img_logo"
                 app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0">
             <TextView
-                    android:text="Sign in"
+                    android:text="登录"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/btn_sign_in" android:onClick="@{()->fragment.signin()}"
@@ -64,7 +64,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={fragment.vm.displayname}"
-                        android:hint="DisplayName" android:id="@+id/text_displayname"/>
+                        android:hint="用户名" android:id="@+id/text_displayname"/>
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -76,7 +76,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={fragment.vm.username}"
-                        android:hint="Username" android:id="@+id/text_username"/>
+                        android:hint="账号" android:id="@+id/text_username"/>
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -88,10 +88,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={fragment.vm.password}"
-                        android:hint="Password" android:id="@+id/text_password"/>
+                        android:hint="密码" android:id="@+id/text_password"/>
             </com.google.android.material.textfield.TextInputLayout>
             <Button
-                    android:text="Register"
+                    android:text="注册"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/btn_register"
                     android:layout_marginTop="8dp"

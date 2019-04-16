@@ -51,7 +51,7 @@
                         android:layout_marginStart="2dp" android:layout_marginEnd="1dp">
 
                     <TextView
-                            android:text="Video Num"
+                            android:text="视频发表数"
                             android:textColor="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" android:id="@+id/textView3"
@@ -83,7 +83,7 @@
 
                     <TextView
                             android:textColor="@color/white"
-                            android:text="Post Num"
+                            android:text="主题发表数"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" android:id="@+id/textView2"
                             app:layout_constraintTop_toTopOf="parent"
@@ -116,7 +116,7 @@
             >
 
                 <Button
-                        android:text="Logout"
+                        android:text="登出"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/btn_logout" app:layout_constraintEnd_toEndOf="parent"
