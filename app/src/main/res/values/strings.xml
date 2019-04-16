@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">and-silang</string>
+    <string name="app_name">手语教学</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
