@@ -35,7 +35,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             override fun onFailure(msg: String?) {
                 cl_login.visibility= View.VISIBLE
                 progressBar.visibility=View.INVISIBLE
-                Toast.makeText(mContext,"账号名或密码错误！",Toast.LENGTH_LONG).show()
+                Toast.makeText(mContext,msg,Toast.LENGTH_LONG).show()
             }
 
             override fun onSuccess(model: Any?) {

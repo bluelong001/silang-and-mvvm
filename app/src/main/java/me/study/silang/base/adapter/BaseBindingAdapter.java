@@ -68,7 +68,8 @@ public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends R
 
     protected void onItemRangeChanged(ObservableArrayList<M> newItems, int positionStart, int itemCount) {
         resetItems(newItems);
-        notifyItemRangeChanged(positionStart, itemCount);
+        notifyDataSetChanged();
+//        notifyItemRangeChanged(positionStart, itemCount);
     }
 
     protected void onItemRangeInserted(ObservableArrayList<M> newItems, int positionStart, int itemCount) {
@@ -83,7 +84,8 @@ public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends R
 
     protected void onItemRangeRemoved(ObservableArrayList<M> newItems, int positionStart, int itemCount) {
         resetItems(newItems);
-        notifyItemRangeRemoved(positionStart, itemCount);
+        notifyDataSetChanged();
+//        notifyItemRangeRemoved(positionStart, itemCount);
     }
 
     protected void resetItems(ObservableArrayList<M> newItems) {
