@@ -10,6 +10,7 @@ import me.study.silang.base.videomodel.BaseViewModel
 import me.study.silang.databinding.FragmentMainBinding
 import me.study.silang.ui.main.bbs.BBSFragment
 import me.study.silang.ui.main.me.MeFragment
+import me.study.silang.ui.main.message.MessageFragment
 import me.study.silang.ui.main.video.VideoFragment
 
 class MainFragment : BaseFragment<FragmentMainBinding>() {
@@ -20,10 +21,10 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
     override fun initView() {
         viewPager.adapter = MainPagerAdapter(
             fragmentManager!!,
-            listOf(VideoFragment(), BBSFragment(), MeFragment())
+            listOf(VideoFragment(), BBSFragment(),MessageFragment(), MeFragment())
         )
         viewPager.currentItem = 0
-        viewPager.offscreenPageLimit = 3
+        viewPager.offscreenPageLimit = 4
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(position: Int) {
                 when (position) {
@@ -32,6 +33,8 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
                     1 ->
                         navigation.selectedItemId = R.id.nav_bbs
                     2 ->
+                        navigation.selectedItemId = R.id.nav_message
+                    3 ->
                         navigation.selectedItemId = R.id.nav_me
                 }
             }
@@ -41,19 +44,18 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
             }
 
         })
-        navigation.setOnNavigationItemSelectedListener(object :
-            BottomNavigationView.OnNavigationItemSelectedListener {
-            override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
-                when (menuItem.itemId) {
-                    R.id.nav_video ->
-                        viewPager.currentItem = 0
-                    R.id.nav_bbs ->
-                        viewPager.currentItem = 1
-                    R.id.nav_me ->
-                        viewPager.currentItem = 2
-                }
-                return true
+        navigation.setOnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_video ->
+                    viewPager.currentItem = 0
+                R.id.nav_bbs ->
+                    viewPager.currentItem = 1
+                R.id.nav_message ->
+                    viewPager.currentItem = 2
+                R.id.nav_me ->
+                    viewPager.currentItem = 3
             }
-        })
+            true
+        }
     }
 }

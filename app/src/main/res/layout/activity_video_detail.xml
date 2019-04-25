@@ -90,7 +90,7 @@
                     app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
                     app:layout_constraintTop_toTopOf="parent"/>
             <TextView
-                    android:text="下载"
+                    android:text="缓存"
                     android:textColor="#1976D2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

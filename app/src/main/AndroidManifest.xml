@@ -47,6 +47,8 @@
         </activity>
         <activity android:name=".ui.main.video.VideoDetailActivity"
                   android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+        <activity android:name=".ui.main.me.MeSetActivity"/>
+        <activity android:name=".ui.main.me.MeCacheVideoActivity"/>
         <receiver android:name=".ui.main.video.VideoDetailActivity$DownloadBroadcast">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />

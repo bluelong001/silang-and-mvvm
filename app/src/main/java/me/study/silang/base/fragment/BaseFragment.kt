@@ -45,7 +45,7 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
         binding = DataBindingUtil.bind(rootView)!!
         with(binding) {
             setVariable(BR.fragment, this@BaseFragment)
-            setLifecycleOwner(this@BaseFragment)
+            lifecycleOwner = this@BaseFragment
         }
     }
 

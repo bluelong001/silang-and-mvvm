@@ -16,27 +16,32 @@
             android:layout_height="match_parent">
 
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:background="@color/colorPrimary"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" android:id="@+id/constraintLayout13">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/navigation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:itemBackground="@color/colorPrimary"
+                    app:itemIconTint="@drawable/selector_main_bottom_nav_button"
+                    app:itemTextColor="@drawable/selector_main_bottom_nav_button"
+                    app:menu="@menu/menu_main_bottom_nav" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/navigation"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/navigation"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                               app:itemBackground="@color/colorPrimary"
-                app:itemIconTint="@drawable/selector_main_bottom_nav_button"
-                app:itemTextColor="@drawable/selector_main_bottom_nav_button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viewPager"
-                app:menu="@menu/menu_main_bottom_nav" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout13"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

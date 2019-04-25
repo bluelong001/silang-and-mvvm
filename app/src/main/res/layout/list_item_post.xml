@@ -11,45 +11,59 @@
                                                        android:layout_width="match_parent"
                                                        android:layout_height="wrap_content" android:id="@+id/postView">
 
+        <me.study.silang.component.HeadIconView
+                android:layout_width="50dp"
+                android:layout_height="50dp" app:srcCompat="@drawable/round_yellow"
+                android:id="@+id/head_icon"
+                android:layout_marginTop="8dp"
+                app:imgUrl="@{model.userInfo.headIcon}"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView6"
+                app:layout_constraintEnd_toEndOf="@+id/constraintLayout14"/>
+        <TextView
+                android:text="@{model.userInfo.displayname}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/display_name"
+                app:layout_constraintBottom_toBottomOf="@+id/head_icon"
+                app:layout_constraintEnd_toStartOf="@+id/head_icon" android:layout_marginEnd="8dp"/>
         <TextView
                 android:text="@{model.title}"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView6" android:layout_marginTop="16dp"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/textView6" android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginEnd="8dp" app:layout_constraintTop_toTopOf="parent"/>
         <TextView
                 android:text="回复数:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView7" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/textView6"
+                android:id="@+id/textView7"
                 app:layout_constraintStart_toStartOf="@+id/textView6"
                 android:layout_marginStart="8dp"
-        />
+                app:layout_constraintTop_toTopOf="@+id/textView10"/>
         <TextView
                 android:text="@{model.gmtUpdate}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView8" app:layout_constraintEnd_toEndOf="@+id/textView6"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/textView6"/>
+                app:layout_constraintTop_toTopOf="@+id/textView10"/>
         <TextView
                 android:text="@{model.replyNum.toString()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView9" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" app:layout_constraintStart_toEndOf="@+id/textView7"
-                android:layout_marginStart="8dp"/>
+                android:id="@+id/textView9"
+                app:layout_constraintStart_toEndOf="@+id/textView7"
+                android:layout_marginStart="8dp" app:layout_constraintTop_toTopOf="@+id/textView7"/>
         <TextView
                 android:text="编辑于:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView10" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" app:layout_constraintEnd_toStartOf="@+id/textView8"
+                app:layout_constraintTop_toBottomOf="@+id/head_icon" app:layout_constraintEnd_toStartOf="@+id/textView8"
                 android:layout_marginEnd="8dp"/>
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -58,7 +72,8 @@
                 android:background="@color/secondaryDarkColor" app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/textView7" android:layout_marginTop="16dp">
+                app:layout_constraintTop_toBottomOf="@+id/textView10"
+                android:id="@+id/constraintLayout14" android:layout_marginTop="8dp">
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

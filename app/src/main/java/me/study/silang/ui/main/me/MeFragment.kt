@@ -1,37 +1,35 @@
 package me.study.silang.ui.main.me
 
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.text.TextUtils
+import androidx.databinding.BindingAdapter
+import androidx.lifecycle.ViewModelProviders
 import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.internal.entity.CaptureStrategy
+import kotlinx.android.synthetic.main.fragment_me.*
 import me.study.silang.R
 import me.study.silang.base.fragment.BaseFragment
-import me.study.silang.base.videomodel.BaseViewModel
 import me.study.silang.component.Glide4Engine
+import me.study.silang.component.HeadIconView
 import me.study.silang.databinding.FragmentMeBinding
 import me.study.silang.ui.login.LoginActivity
+import me.study.silang.ui.main.UserViewModel
+import me.study.silang.ui.main.bbs.BBSFragment
 import me.study.silang.ui.main.video.VideoFragment
-import org.kodein.di.Kodein
-import com.zhihu.matisse.internal.entity.CaptureStrategy
-import android.app.Activity
-import android.text.TextUtils
-import kotlinx.android.synthetic.main.fragment_me.*
 import me.study.silang.utils.AnyCallback
-import java.net.URI
+
 
 
 class MeFragment : BaseFragment<FragmentMeBinding>() {
     override val layoutId: Int = R.layout.fragment_me
     lateinit var vm: MeViewModel
-
+    lateinit var userViewModel: UserViewModel
     override fun initView() {
         vm = MeViewModel(mContext)
-        vm.initUser(object : AnyCallback() {
-            override fun callback() {
-                vm.model.get()!!.headIcon.also { icon -> if (!TextUtils.isEmpty(icon)) imageView.setImageURL(icon) }
-            }
-
-        })
+        userViewModel = ViewModelProviders.of(activity!!).get(UserViewModel::class.java)
     }
 
     fun logout() =
@@ -40,9 +38,17 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
             this!!.finish()
         }
 
+    fun showCacheVideo(){
+        MeCacheVideoActivity.launch(activity!!)
+    }
+
+    fun modify() {
+        MeSetActivity.launch(activity!!,userViewModel.userInfo.get()!!)
+    }
+
     fun setHead() {
         Matisse.from(this@MeFragment)
-            .choose(MimeType.ofImage(),true)
+            .choose(MimeType.ofImage(), true)
             .countable(true)
             .capture(true)
             .captureStrategy(CaptureStrategy(true, "me.study.silang.fileprovider"))
@@ -62,7 +68,7 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
                 vm.headImgUrl.set(Matisse.obtainPathResult(intent!!)[0])
                 vm.updateHead(object : AnyCallback() {
                     override fun callback() {
-                        vm.model.get()!!.headIcon.also { icon -> if (!TextUtils.isEmpty(icon)) imageView.setImageURL(icon) }
+                        userViewModel.initUser(null)
                     }
                 })
             }

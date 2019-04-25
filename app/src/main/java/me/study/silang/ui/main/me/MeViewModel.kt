@@ -30,8 +30,8 @@ import java.io.File
 import java.util.ArrayList
 
 class MeViewModel(var context: Context) : BaseViewModel() {
-    var model = ObservableField<UserInfo>()
-    var userData = ObservableField<UserData>()
+//    var model = ObservableField<UserInfo>()
+//    var userData = ObservableField<UserData>()
     var headImgUrl = ObservableField<String>()
     var service: MeRepository =
         (RetrofitManager.getInstance<MeRepository>(context, MeRepository::class.java).service as MeRepository?)!!
@@ -41,34 +41,6 @@ class MeViewModel(var context: Context) : BaseViewModel() {
 //
 //    }
 
-    fun initUser(callback: AnyCallback?) {
-        service.getUserInfo()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : RetrofitCallback<Any>() {
-                override fun onSuccess(data: Any?) {
-                    model.set(data as UserInfo)
-                    callback?.callback()
-                }
-
-                override fun onFailure(msg: String?) {
-
-                }
-            })
-        service.getUserData()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : RetrofitCallback<Any>() {
-                override fun onSuccess(data: Any?) {
-                    userData.set(data as UserData)
-                    callback?.callback()
-                }
-
-                override fun onFailure(msg: String?) {
-
-                }
-            })
-    }
 
     fun updateHead(callback: AnyCallback?) {
         val out = File(headImgUrl.get()!!)
@@ -90,7 +62,7 @@ class MeViewModel(var context: Context) : BaseViewModel() {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(object : RetrofitCallback<Any>() {
                                 override fun onSuccess(data: Any?) {
-                                    initUser(callback)
+                                    callback?.callback()
 
                                 }
 

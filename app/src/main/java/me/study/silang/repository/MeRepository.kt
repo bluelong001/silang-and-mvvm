@@ -16,8 +16,5 @@ interface MeRepository  {
     @FormUrlEncoded
     @PUT("user/swap-head")
     fun update(@FieldMap param: Param): Observable<Rest<String>>
-    @GET("user/by-id")
-    fun getUserInfo(): Observable<Rest<UserInfo>>
-    @GET("user/get-data")
-    fun getUserData(): Observable<Rest<UserData>>
+
 }
