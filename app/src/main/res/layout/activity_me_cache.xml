@@ -4,7 +4,7 @@
         android:id="@+id/layout">
 
     <data>
-        <variable name="activity" type="me.study.silang.ui.main.me.MeCacheVideoActivity"/>
+        <variable name="activity" type="me.study.silang.ui.main.me.cache.MeCacheVideoActivity"/>
     </data>
     <FrameLayout
             android:background="@color/colorBack"
@@ -45,6 +45,7 @@
 
             </com.google.android.material.appbar.AppBarLayout>
             <com.jcodecraeer.xrecyclerview.XRecyclerView android:layout_width="match_parent"
+                                                         android:id="@+id/list_video_cache"
                                                          android:layout_height="0dp"
                                                          app:layout_constraintStart_toStartOf="parent"
                                                          app:layout_constraintEnd_toEndOf="parent"

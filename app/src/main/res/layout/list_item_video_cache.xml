@@ -3,8 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="me.study.silang.model.VideoModel"/>
-        <variable name="model" type="VideoModel"/>
+        <variable name="videoCache" type="me.study.silang.room.VideoCache"/>
     </data>
 
     <LinearLayout android:orientation="vertical"
@@ -27,8 +26,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="120dp">
 
+                <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp" tools:srcCompat="@drawable/ic_perm_media_black_48dp"
+                        android:id="@+id/video_cache" app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="2dp"
+                        app:layout_constraintWidth_percent=".20"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintVertical_bias="0.0" android:layout_marginStart="2dp"
+                        android:layout_marginTop="2dp"/>
                 <TextView
-                        android:text="@{model.title}"
+                        android:text="@{videoCache.title}"
                         android:layout_width="wrap_content"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -37,28 +47,30 @@
                         android:layout_height="wrap_content" android:id="@+id/tvTitle"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
                         app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp"
                         android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.0"
-                />
+                        app:layout_constraintVertical_bias="0.0"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintTop_toBottomOf="@+id/video_cache"
+                        app:layout_constraintStart_toStartOf="parent"/>
                 <TextView
-                        android:text="@{model.gmtCreate}"
+                        android:text="@{videoCache.cacheDate}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tvCreate"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="8dp" android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/tvTitle" app:layout_constraintVertical_bias="1.0"
-                        tools:layout_editor_absoluteX="120dp"/>
-                <TextView
-                        android:text="@{model.userInfo.displayname}"
+                        android:id="@+id/tvCreate" app:layout_constraintStart_toEndOf="@+id/video"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
+                <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tvEditor"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvCreate"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="8dp" app:layout_constraintStart_toEndOf="@+id/tvCreate"
-                        android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="1.0"/>
+                        android:layout_height="wrap_content" app:srcCompat="@drawable/ic_delete_black_48dp"
+                        android:id="@+id/btn_delete" app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 

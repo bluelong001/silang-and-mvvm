@@ -40,6 +40,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoListAdapter.Cal
         var videoInfo: VideoModel = v.tag as VideoModel
         Intent(context, VideoDetailActivity::class.java).also { intent ->
             intent.putExtra("data", Gson().toJson(videoInfo))
+            intent.putExtra("userId",userViewModel.userInfo.get()!!.id)
             startActivity(intent)
         }
     }

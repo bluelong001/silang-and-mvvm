@@ -39,6 +39,8 @@
                 android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
 
         </activity>
+        <activity android:name=".ui.main.me.cache.MeCacheVideoActivity"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <activity android:name=".ui.main.bbs.PostDetailActivity"
                   android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
         </activity>
@@ -48,12 +50,8 @@
         <activity android:name=".ui.main.video.VideoDetailActivity"
                   android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <activity android:name=".ui.main.me.MeSetActivity"/>
-        <activity android:name=".ui.main.me.MeCacheVideoActivity"/>
-        <receiver android:name=".ui.main.video.VideoDetailActivity$DownloadBroadcast">
-            <intent-filter>
-                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
-            </intent-filter>
-        </receiver>
+
+        <activity android:name=".ui.main.me.cache.MeCacheVideoShowActivity"/>
 
         <provider
                 android:name="androidx.core.content.FileProvider"

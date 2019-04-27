@@ -1,6 +1,7 @@
 package me.study.silang.ui.main.video
 
 import android.app.DownloadManager
+import android.app.ProgressDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -31,13 +32,15 @@ import androidx.core.content.FileProvider
 import kotlinx.android.synthetic.main.activity_post_new.*
 import me.study.silang.BuildConfig
 import me.study.silang.R
+import me.study.silang.room.RoomHelper
+import me.study.silang.room.VideoCache
+import me.study.silang.utils.DownloadAsyncTask
 import java.io.File
 
 
 class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
     override val layoutId = me.study.silang.R.layout.activity_video_detail
     private var orientationUtils: OrientationUtils? = null
-    var mDownloadBroadcast: DownloadBroadcast? =null
     private var isPlay: Boolean = false
     private var isPause: Boolean = false
     lateinit var model: VideoModel
@@ -47,37 +50,53 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
 //    }
 
     fun download() {
-            val fileName = UUID.randomUUID().toString().replace("-", "")+"mp4"
-            val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-            val request = DownloadManager.Request(Uri.parse(model.fileUrl))
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            request.setTitle(fileName)
-            request.setMimeType("application/vnd.android.package-archive")
-            val file = File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), fileName)
-            if (file.exists()) {
-                file.delete()
+        val fileName = UUID.randomUUID().toString().replace("-", "") + ".mp4"
+//        val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+//        val request = DownloadManager.Request(Uri.parse(model.fileUrl))
+//        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+//        request.setTitle(fileName)
+//        request.setMimeType("application/vnd.android.package-archive")
+//        val file = File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), fileName)
+//        if (file.exists()) {
+//            file.delete()
+//        }
+//        request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, fileName)
+//        val downloadId = downloadManager.enqueue(request)
+//        //文件下载完成会发送完成广播，可注册广播进行监听
+//        val intentFilter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+//        intentFilter.addAction(DownloadManager.ACTION_NOTIFICATION_CLICKED)
+//        intentFilter.addAction(DownloadManager.ACTION_VIEW_DOWNLOADS)
+//        mDownloadBroadcast = DownloadBroadcast(file)
+//        registerReceiver(mDownloadBroadcast, intentFilter)
+
+        DownloadAsyncTask(this,ProgressDialog(this), fileName, model.fileUrl, object : DownloadAsyncTask.DownloadSuccess {
+            override fun callback() {
+                VideoCache().also { videoCache ->
+                    videoCache.userId = userId
+                    videoCache.title = model.title
+                    videoCache.content = model.content
+                    videoCache.localUrl = Environment.DIRECTORY_DOWNLOADS + File.separator + fileName
+
+                    RoomHelper.getInstance(this@VideoDetailActivity)!!.download(videoCache)
+                }
             }
-            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, fileName)
-            val downloadId = downloadManager.enqueue(request)
-            //文件下载完成会发送完成广播，可注册广播进行监听
-            val intentFilter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-            intentFilter.addAction(DownloadManager.ACTION_NOTIFICATION_CLICKED)
-            intentFilter.addAction(DownloadManager.ACTION_VIEW_DOWNLOADS)
-            mDownloadBroadcast = DownloadBroadcast(file)
-            registerReceiver(mDownloadBroadcast, intentFilter)
+
+        }).also { task -> task.execute() }
+
 
     }
 
-    fun getImg(url: String): Bitmap {
+    private fun getImg(url: String): Bitmap {
         setSupportActionBar(toolbar)
         val media = MediaMetadataRetriever()
         media.setDataSource(url, Hashtable<String, String>())
         return media.getFrameAtTime(0, MediaMetadataRetriever.OPTION_CLOSEST_SYNC)
     }
 
+    var userId: Int = 0
     override fun initView() {
         model = Gson().fromJson(intent.getStringExtra("data"), VideoModel::class.java)
-
+        userId = intent.getIntExtra("userId", 0)
         //增加封面
         val imageView = ImageView(this)
         imageView.setImageBitmap(getImg(model.fileUrl!!))
@@ -165,9 +184,7 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
         }
         if (orientationUtils != null)
             orientationUtils!!.releaseListener()
-        if (mDownloadBroadcast != null) {
-            unregisterReceiver(mDownloadBroadcast)
-        }
+
     }
 
 
@@ -176,30 +193,6 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
         //如果旋转了就全屏
         if (isPlay && !isPause) {
             detailPlayer.onConfigurationChanged(this, newConfig, orientationUtils, true, true)
-        }
-    }
-
-    inner class DownloadBroadcast(private val mFile: File) : BroadcastReceiver() {
-
-        override fun onReceive(context: Context, intent: Intent) {
-            val action = intent.action
-            if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
-                val intent1 = Intent(Intent.ACTION_VIEW)
-                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-                    intent1.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    val uri1 = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileProvider", mFile)
-                    intent1.setDataAndType(uri1, "application/vnd.android.package-archive")
-                } else {
-                    intent1.setDataAndType(Uri.fromFile(mFile), "application/vnd.android.package-archive")
-                }
-                try {
-                    startActivity(intent1)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-
-            }
         }
     }
 }

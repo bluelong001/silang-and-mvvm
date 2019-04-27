@@ -3,22 +3,17 @@ package me.study.silang.ui.main.me
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.text.TextUtils
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.ViewModelProviders
 import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
 import com.zhihu.matisse.internal.entity.CaptureStrategy
-import kotlinx.android.synthetic.main.fragment_me.*
 import me.study.silang.R
 import me.study.silang.base.fragment.BaseFragment
 import me.study.silang.component.Glide4Engine
-import me.study.silang.component.HeadIconView
 import me.study.silang.databinding.FragmentMeBinding
-import me.study.silang.ui.MainActivity
 import me.study.silang.ui.login.LoginActivity
 import me.study.silang.ui.main.UserViewModel
-import me.study.silang.ui.main.bbs.BBSFragment
+import me.study.silang.ui.main.me.cache.MeCacheVideoActivity
 import me.study.silang.ui.main.video.VideoFragment
 import me.study.silang.utils.AnyCallback
 
@@ -44,7 +39,7 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
     }
 
     fun showCacheVideo() {
-        MeCacheVideoActivity.launch(activity!!)
+        MeCacheVideoActivity.launch(activity!!,userViewModel.userInfo.get()!!.id!!)
     }
 
     fun modify() {
