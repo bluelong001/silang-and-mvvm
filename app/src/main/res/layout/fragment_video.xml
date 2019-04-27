@@ -31,11 +31,11 @@
                     android:layout_marginTop="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
                     android:id="@+id/sv_video">
                 <!--<EditText-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:inputType="textPersonName"-->
-                        <!--android:ems="10"-->
-                        <!--android:id="@+id/editText" android:layout_weight="1"/>-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:inputType="textPersonName"-->
+                <!--android:ems="10"-->
+                <!--android:id="@+id/editText" android:layout_weight="1"/>-->
             </SearchView>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <FrameLayout
@@ -45,7 +45,8 @@
                 android:onClick="@{()->fragment.closeAddDialog()}"
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/dialog_add_back"
-                android:visibility="@{fragment.vm.addStatus.get() ?  View.VISIBLE:View.GONE }"
+                app:adminVisibility="@{fragment.userViewModel.userInfo.role}"
+                app:openStatus="@{!fragment.vm.addStatus }"
                 app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/dialog_add">
 
@@ -56,7 +57,8 @@
                 android:clickable="true" app:srcCompat="@drawable/ic_add_white_48dp"
                 android:id="@+id/btn_video_add"
                 android:onClick="@{()->fragment.showAddDialog()}"
-                android:visibility="@{fragment.vm.addStatus.get() ? View.GONE :View.VISIBLE }"
+                app:openStatus="@{fragment.vm.addStatus }"
+                app:adminVisibility="@{fragment.userViewModel.userInfo.role}"
                 android:layout_marginEnd="32dp"
                 android:layout_gravity="bottom|right" tools:ignore="RtlHardcoded" android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="32dp"

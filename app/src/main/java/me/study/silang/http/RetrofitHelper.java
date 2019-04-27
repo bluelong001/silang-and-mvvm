@@ -2,6 +2,7 @@ package me.study.silang.http;
 
 import android.annotation.SuppressLint;
 import com.google.gson.*;
+import me.study.silang.config.BaseIPAdress;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -22,7 +23,7 @@ public class RetrofitHelper {
     <S> S createService(Class<S> serviceClass, String authToken) {
 
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://192.168.199.225:8080/api/");
+                .baseUrl(BaseIPAdress.getHttpAddress());
 
         OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
 

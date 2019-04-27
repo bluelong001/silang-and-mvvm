@@ -1,28 +1,27 @@
 package me.study.silang.ui.main.bbs
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.view.View
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
+import com.jcodecraeer.xrecyclerview.XRecyclerView
 import kotlinx.android.synthetic.main.fragment_bbs.*
 import me.study.silang.R
 import me.study.silang.base.fragment.BaseFragment
 import me.study.silang.databinding.FragmentBbsBinding
 import me.study.silang.model.PostModel
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.jcodecraeer.xrecyclerview.XRecyclerView
-import android.annotation.SuppressLint
-import me.study.silang.bean.Page
-import me.study.silang.http.RetrofitCallback
+import me.study.silang.ui.main.UserViewModel
 import me.study.silang.utils.AnyCallback
-import java.util.logging.Handler
 
 
 class BBSFragment : BaseFragment<FragmentBbsBinding>(), PostListAdapter.Callback {
 
     lateinit var vm: BBSViewModel
     override val layoutId: Int = R.layout.fragment_bbs
-
+    lateinit var userViewModel:UserViewModel
     override fun click(v: View) {
         var postInfo: PostModel = v.tag as PostModel
         Intent(context, PostDetailActivity::class.java).also { intent ->
@@ -36,6 +35,7 @@ class BBSFragment : BaseFragment<FragmentBbsBinding>(), PostListAdapter.Callback
         vm = BBSViewModel(mContext)
         vm.postListAdapter = PostListAdapter(mContext, this)
         vm.initPostList(null)
+        userViewModel = ViewModelProviders.of(activity!!).get(UserViewModel::class.java)
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvPost.layoutManager = layoutManager

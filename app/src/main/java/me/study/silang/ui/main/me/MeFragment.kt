@@ -15,12 +15,12 @@ import me.study.silang.base.fragment.BaseFragment
 import me.study.silang.component.Glide4Engine
 import me.study.silang.component.HeadIconView
 import me.study.silang.databinding.FragmentMeBinding
+import me.study.silang.ui.MainActivity
 import me.study.silang.ui.login.LoginActivity
 import me.study.silang.ui.main.UserViewModel
 import me.study.silang.ui.main.bbs.BBSFragment
 import me.study.silang.ui.main.video.VideoFragment
 import me.study.silang.utils.AnyCallback
-
 
 
 class MeFragment : BaseFragment<FragmentMeBinding>() {
@@ -32,18 +32,23 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
         userViewModel = ViewModelProviders.of(activity!!).get(UserViewModel::class.java)
     }
 
-    fun logout() =
+    fun logout() {
+        userViewModel.mSocket.run {
+            this!!.emit("logout",userViewModel.userInfo.get()!!.id)
+            this.disconnect()
+        }
         activity.apply {
             startActivity(Intent(this, LoginActivity::class.java))
             this!!.finish()
         }
+    }
 
-    fun showCacheVideo(){
+    fun showCacheVideo() {
         MeCacheVideoActivity.launch(activity!!)
     }
 
     fun modify() {
-        MeSetActivity.launch(activity!!,userViewModel.userInfo.get()!!)
+        MeSetActivity.launch(activity!!, userViewModel.userInfo.get()!!)
     }
 
     fun setHead() {

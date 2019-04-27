@@ -10,7 +10,6 @@ import java.util.function.Consumer
 import javax.xml.datatype.DatatypeConstants.SECONDS
 
 
-
 object BaseDataBindingAdapter {
     @BindingAdapter("imgUrl")
     @JvmStatic
@@ -18,6 +17,20 @@ object BaseDataBindingAdapter {
         if (!TextUtils.isEmpty(url)) view.setImageURL(url)
     }
 
+    @BindingAdapter("adminVisibility", "openStatus")
+    @JvmStatic
+    fun adminVisibility(view: View, role: Int, visibility: Boolean?) {
+        when (role) {
+            1 -> view.visibility = View.INVISIBLE
+            2 -> {
+                if (visibility != null)
+                    if (visibility)
+                        view.visibility = View.GONE
+                    else view.visibility = View.VISIBLE
+            }
+        }
+
+    }
 //    var lastClickTime: Long = 0L
 //    @BindingAdapter("android:onClick")
 //    @JvmStatic

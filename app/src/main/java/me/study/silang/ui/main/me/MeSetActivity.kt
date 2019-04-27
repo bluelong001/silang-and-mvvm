@@ -38,7 +38,7 @@ import me.study.silang.utils.AnyCallback
 
 
 class MeSetActivity : BaseActivity<ActivityMeSetBinding>() {
-    override val layoutId: Int = R.layout.fragment_me
+    override val layoutId: Int = R.layout.activity_me_set
     lateinit var userInfo:UserInfo
     override fun initView() {
         val bundle = intent.extras

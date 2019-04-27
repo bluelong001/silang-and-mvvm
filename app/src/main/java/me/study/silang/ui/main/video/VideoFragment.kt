@@ -12,6 +12,7 @@ import android.widget.AbsListView
 import android.widget.SearchView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -30,6 +31,7 @@ import java.util.*
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.jcodecraeer.xrecyclerview.XRecyclerView
 import kotlinx.android.synthetic.main.fragment_bbs.*
+import me.study.silang.ui.main.UserViewModel
 import me.study.silang.ui.main.bbs.PostListAdapter
 
 
@@ -51,12 +53,15 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoListAdapter.Cal
     override val layoutId: Int = R.layout.fragment_video
 
     lateinit var vm: VideoViewModel
+    lateinit var userViewModel:UserViewModel
 
     @SuppressLint("WrongConstant")
     override fun initView() {
         vm = VideoViewModel(mContext)
         vm.videoListAdapter = VideoListAdapter(mContext, this)
         vm.initVideo(null)
+        userViewModel = ViewModelProviders.of(activity!!).get(UserViewModel::class.java)
+
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
 // 绑定布局管理器

@@ -7,13 +7,12 @@
         <variable name="activity" type="me.study.silang.ui.main.me.MeSetActivity"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@color/colorBack"
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
                 android:orientation="vertical" android:id="@+id/appBarLayout" app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent">
 
@@ -47,13 +46,6 @@
                 app:layout_constraintEnd_toEndOf="parent">
 
 
-            <TextView
-                    android:text="账户名"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView23"
-                    app:layout_constraintBottom_toBottomOf="@+id/accountName"
-                    app:layout_constraintEnd_toStartOf="@+id/accountName" android:layout_marginEnd="8dp"/>
             <me.study.silang.component.HeadIconView
                     android:layout_width="150dp"
                     app:imgUrl="@{activity.userInfo.headIcon}"
@@ -61,7 +53,7 @@
                     android:id="@+id/imageView"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="8dp" android:layout_marginBottom="32dp"
+                    android:layout_marginEnd="8dp" android:layout_marginBottom="16dp"
                     app:layout_constraintBottom_toTopOf="@+id/guideline"/>
             <TextView
                     android:text="显示名"
@@ -75,32 +67,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView17"
-                    app:layout_constraintEnd_toStartOf="@+id/accountName" android:layout_marginEnd="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/oldPass" android:layout_marginBottom="8dp"/>
+                    app:layout_constraintBottom_toBottomOf="@+id/oldPass" android:layout_marginBottom="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/oldPass" android:layout_marginEnd="8dp"/>
             <TextView
                     android:text="新密码"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView21"
                     app:layout_constraintBottom_toBottomOf="@+id/newPass"
-                    app:layout_constraintEnd_toStartOf="@+id/accountName" android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="8dp" app:layout_constraintEnd_toStartOf="@+id/newPass"
+                    android:layout_marginEnd="8dp"/>
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:ems="10"
-                    android:enabled="false"
-                    android:id="@+id/accountName"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="@+id/guideline" android:layout_marginEnd="8dp"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                    app:layout_constraintStart_toStartOf="@+id/guideline3"/>
-            <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text=""
                     android:hint="请输入旧密码"
+                    android:text="@={activity.oldPass}"
                     android:ems="10"
                     android:id="@+id/oldPass"
                     android:layout_marginTop="8dp"
@@ -113,7 +94,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:text=""
+                    android:text="@={activity.newPass}"
                     android:ems="10"
                     android:id="@+id/newPass"
                     android:hint="请输入新密码"
@@ -127,10 +108,11 @@
                     android:inputType="textPersonName"
                     android:enabled="false"
                     android:ems="10"
-                    android:id="@+id/displayName" android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toBottomOf="@+id/accountName"
+                    android:text="@{activity.userInfo.displayname}"
+                    android:id="@+id/displayName"
                     android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                    app:layout_constraintStart_toStartOf="@+id/guideline3"/>
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toTopOf="@+id/guideline" android:layout_marginTop="32dp"/>
             <androidx.constraintlayout.widget.Guideline
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
@@ -150,6 +132,7 @@
                     android:text="确认修改"
                     android:layout_width="0dp"
                     android:onClick="@{()->activity.update()}"
+
                     android:layout_height="wrap_content"
                     android:id="@+id/button3" android:layout_marginTop="16dp"
                     app:layout_constraintTop_toBottomOf="@+id/newPass"
