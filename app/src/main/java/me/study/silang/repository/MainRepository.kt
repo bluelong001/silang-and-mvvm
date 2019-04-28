@@ -14,9 +14,11 @@ import retrofit2.http.*
 interface MainRepository {
     @GET("user/by-id")
     fun getUserInfo(): Observable<Rest<UserInfo>>
+
     @GET("user/get-data")
     fun getUserData(): Observable<Rest<UserData>>
+
     @FormUrlEncoded
     @PUT("user/set-pass")
-    fun updatePass(userId:Int, oldPass:String,newPass:String):Observable<Rest<String>>
+    fun updatePass(@Field("userId") userId: Int, @Field("oldPass") oldPass: String, @Field("newPass") newPass: String): Observable<Rest<String>>
 }

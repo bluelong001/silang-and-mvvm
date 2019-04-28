@@ -29,21 +29,26 @@ public class DownloadAsyncTask extends AsyncTask<Integer, Integer, String> {
     private boolean idDownloading = true;
     private String fileName, requestUrlPath;
     private DownloadSuccess downloadSuccess;
-    public interface DownloadSuccess{
-       void callback();
+
+    public interface DownloadSuccess {
+        void callback();
     }
-    public DownloadAsyncTask(Context mContext,ProgressDialog dialog, String fileName, String requestUrlPath,DownloadSuccess downloadSuccess) {
+
+    public DownloadAsyncTask(Context mContext, ProgressDialog dialog, String fileName, String requestUrlPath, DownloadSuccess downloadSuccess) {
         this.mContext = mContext;
-        this.dialog =dialog;
+        this.dialog = dialog;
         this.fileName = fileName;
         this.requestUrlPath = requestUrlPath;
-        this.downloadSuccess=downloadSuccess;
+        this.downloadSuccess = downloadSuccess;
     }
 
     @Override
     protected String doInBackground(Integer... integers) {
         downloadByDownloadManager(mContext, fileName, requestUrlPath);
-        return String.valueOf(integers[0].intValue());
+        if (integers.length > 0)
+            return String.valueOf(integers[0].intValue());
+        else
+            return "";
     }
 
     @Override
@@ -54,7 +59,7 @@ public class DownloadAsyncTask extends AsyncTask<Integer, Integer, String> {
         dialog.setTitle("下载中...");
         dialog.setCancelable(false);
         dialog.setMax(100);
-        dialog.setButton("取消下载",new DialogInterface.OnClickListener(){
+        dialog.setButton("取消下载", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 remove(mContext);

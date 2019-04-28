@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
+import me.study.silang.BR;
 
 public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends RecyclerView.Adapter {
     protected Context context;
@@ -45,6 +46,7 @@ public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends R
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         B binding = DataBindingUtil.getBinding(holder.itemView);
+        binding.setVariable(BR.model,this.items.get(position));
         this.onBindItem(binding, this.items.get(position));
     }
 

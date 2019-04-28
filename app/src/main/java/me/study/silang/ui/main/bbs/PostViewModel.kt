@@ -70,6 +70,8 @@ class PostViewModel(var context: Context) : BaseViewModel() {
                 }
 
                 override fun onSuccess(model: Any?) {
+                    textReply.set("")
+
                     initReply(null)
 //                    callback?.callback()
                 }

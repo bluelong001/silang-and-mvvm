@@ -12,6 +12,7 @@ import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -35,6 +36,7 @@ import me.study.silang.R
 import me.study.silang.room.RoomHelper
 import me.study.silang.room.VideoCache
 import me.study.silang.utils.DownloadAsyncTask
+import me.study.silang.utils.MediaUtils
 import java.io.File
 
 
@@ -99,7 +101,7 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
         userId = intent.getIntExtra("userId", 0)
         //增加封面
         val imageView = ImageView(this)
-        imageView.setImageBitmap(getImg(model.fileUrl!!))
+        imageView.setImageBitmap(MediaUtils.createVideoThumbnail(model.fileUrl!!, MediaStore.Images.Thumbnails.MINI_KIND))
 
         //增加title
         detailPlayer.titleTextView.visibility = View.GONE

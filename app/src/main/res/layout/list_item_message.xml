@@ -3,7 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="msg" type="String"/>
+        <variable name="model" type="String"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout android:orientation="vertical"
@@ -18,7 +18,7 @@
                 android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp"/>
         <TextView
-                android:text="@{msg}"
+                android:text="@={model}"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:layout_width="0dp"
