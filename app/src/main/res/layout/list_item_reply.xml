@@ -16,6 +16,7 @@
                 android:layout_height="50dp" app:srcCompat="@drawable/round_yellow"
                 android:id="@+id/head_icon" app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
+                app:imgUrl="@{model.userInfo.headIcon}"
                 android:layout_marginStart="8dp"/>
         <TextView
                 android:text="@{model.userInfo.displayname}"
