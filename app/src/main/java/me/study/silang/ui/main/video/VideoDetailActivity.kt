@@ -1,5 +1,6 @@
 package me.study.silang.ui.main.video
 
+import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.app.ProgressDialog
 import android.content.BroadcastReceiver
@@ -30,14 +31,23 @@ import java.util.*
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.content.FileProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
+import com.google.android.material.internal.FlowLayout
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_post_new.*
 import me.study.silang.BuildConfig
 import me.study.silang.R
+import me.study.silang.component.MyGridNoScrollLayoutManager
+import me.study.silang.component.MyLinearNoScrollLayoutManager
 import me.study.silang.room.RoomHelper
 import me.study.silang.room.VideoCache
 import me.study.silang.utils.DownloadAsyncTask
 import me.study.silang.utils.MediaUtils
 import java.io.File
+import kotlin.collections.ArrayList
 
 
 class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
@@ -46,6 +56,19 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
     private var isPlay: Boolean = false
     private var isPause: Boolean = false
     lateinit var model: VideoModel
+
+    companion object{
+        fun launch(videoModel: VideoModel,context:Context){
+            var videoInfo: VideoModel = videoModel
+            Intent(context, VideoDetailActivity::class.java).also { intent ->
+                intent.putExtra("data", Gson().toJson(videoInfo))
+                context.startActivity(intent)
+            }
+        }
+
+    }
+
+    lateinit var imgListAdapter: VideoImgListAdapter
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
 //        menuInflater.inflate(R.menu.menu_video_opt_nav, menu)
 //        return super.onCreateOptionsMenu(menu)
@@ -71,37 +94,56 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
 //        mDownloadBroadcast = DownloadBroadcast(file)
 //        registerReceiver(mDownloadBroadcast, intentFilter)
 
-        DownloadAsyncTask(this,ProgressDialog(this), fileName, model.fileUrl, object : DownloadAsyncTask.DownloadSuccess {
-            override fun callback() {
-                VideoCache().also { videoCache ->
-                    videoCache.userId = userId
-                    videoCache.title = model.title
-                    videoCache.content = model.content
-                    videoCache.localUrl = Environment.DIRECTORY_DOWNLOADS + File.separator + fileName
+        DownloadAsyncTask(
+            this,
+            ProgressDialog(this),
+            fileName,
+            model.fileUrl,
+            object : DownloadAsyncTask.DownloadSuccess {
+                override fun callback() {
+                    VideoCache().also { videoCache ->
+                        videoCache.userId = userId
+                        videoCache.title = model.title
+                        videoCache.content = model.content
+                        videoCache.localUrl = Environment.DIRECTORY_DOWNLOADS + File.separator + fileName
 
-                    RoomHelper.getInstance(this@VideoDetailActivity)!!.download(videoCache)
+                        RoomHelper.getInstance(this@VideoDetailActivity)!!.download(videoCache)
+                    }
                 }
-            }
 
-        }).also { task -> task.execute() }
+            }).also { task -> task.execute() }
 
 
-    }
-
-    private fun getImg(url: String): Bitmap {
-        setSupportActionBar(toolbar)
-        val media = MediaMetadataRetriever()
-        media.setDataSource(url, Hashtable<String, String>())
-        return media.getFrameAtTime(0, MediaMetadataRetriever.OPTION_CLOSEST_SYNC)
     }
 
     var userId: Int = 0
+    @SuppressLint("WrongConstant")
     override fun initView() {
         model = Gson().fromJson(intent.getStringExtra("data"), VideoModel::class.java)
-        userId = intent.getIntExtra("userId", 0)
+        userId = getSharedPreferences("silang_user_info",Context.MODE_PRIVATE).getInt("userId",0)
+
+
+        imgListAdapter = VideoImgListAdapter(this)
+        //初始化图片墙
+        var manager = MyLinearNoScrollLayoutManager(this)
+//        var manager = FlexboxLayoutManager(this)
+//        manager.flexDirection= FlexDirection.COLUMN
+//        manager.justifyContent=JustifyContent.FLEX_END
+        imgList.layoutManager = manager
+        imgList.adapter = imgListAdapter
+        var type = object : TypeToken<ArrayList<String>>() {}.type
+        var list = Gson().fromJson(model.imgList, type) as ArrayList<String>?
+        if (null != list) imgListAdapter.items.addAll(list)
+
+
         //增加封面
         val imageView = ImageView(this)
-        imageView.setImageBitmap(MediaUtils.createVideoThumbnail(model.fileUrl!!, MediaStore.Images.Thumbnails.MINI_KIND))
+        imageView.setImageBitmap(
+            MediaUtils.createVideoThumbnail(
+                model.fileUrl!!,
+                MediaStore.Images.Thumbnails.MINI_KIND
+            )
+        )
 
         //增加title
         detailPlayer.titleTextView.visibility = View.GONE

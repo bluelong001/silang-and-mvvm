@@ -1,8 +1,11 @@
 package me.study.silang.ui.main.me
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.widget.EditText
 import androidx.lifecycle.ViewModelProviders
 import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
@@ -29,7 +32,7 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
 
     fun logout() {
         userViewModel.mSocket.run {
-            this!!.emit("logout",userViewModel.userInfo.get()!!.id)
+            this!!.emit("logout", userViewModel.userInfo.get()!!.id)
             this.disconnect()
         }
         activity.apply {
@@ -39,7 +42,7 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
     }
 
     fun showCacheVideo() {
-        MeCacheVideoActivity.launch(activity!!,userViewModel.userInfo.get()!!.id!!)
+        MeCacheVideoActivity.launch(activity!!, userViewModel.userInfo.get()!!.id!!)
     }
 
     fun modify() {
@@ -60,6 +63,17 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
             .forResult(VideoFragment.REQUEST_CODE_CHOOSE)
     }
 
+    fun setSignature() {
+        val mEdit = EditText(mContext)
+        var dialog = AlertDialog.Builder(mContext)
+            .setView(mEdit)
+            .setPositiveButton("确认输入"
+            ) { dialog, which -> vm.updateSignature(mEdit.text.toString(), null) }
+            .setNegativeButton("取消输入"
+            ) { dialog, which -> dialog.cancel() }
+        dialog.show()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
         if (resultCode == Activity.RESULT_OK) {
@@ -68,7 +82,7 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
                 vm.headImgUrl.set(Matisse.obtainPathResult(intent!!)[0])
                 vm.updateHead(object : AnyCallback() {
                     override fun callback() {
-                        userViewModel.initUser(null)
+                        userViewModel.initUser(null, mContext)
                     }
                 })
             }

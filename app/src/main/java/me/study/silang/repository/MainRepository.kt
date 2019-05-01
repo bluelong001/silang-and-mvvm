@@ -3,6 +3,7 @@ package me.study.silang.repository
 import io.reactivex.Observable
 import me.study.silang.bean.Param
 import me.study.silang.bean.Rest
+import me.study.silang.entity.Message
 import me.study.silang.entity.Post
 import me.study.silang.entity.User
 import me.study.silang.entity.Video
@@ -21,4 +22,13 @@ interface MainRepository {
     @FormUrlEncoded
     @PUT("user/set-pass")
     fun updatePass(@Field("userId") userId: Int, @Field("oldPass") oldPass: String, @Field("newPass") newPass: String): Observable<Rest<String>>
+
+    @GET("message/list")
+    fun listMessages(): Observable<Rest<List<Message>>>
+
+    @GET("message/get/by-id")
+    fun getMessage(@Query("id") id:Int): Observable<Rest<Message>>
+
+    @DELETE("message/del/um")
+    fun delMessageById(@Query("id") id:Int): Observable<Rest<String>>
 }

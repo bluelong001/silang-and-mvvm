@@ -22,7 +22,7 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>() {
         list_message.layoutManager = layoutManager
         list_message.adapter=userViewModel.messageListAdapter
         userViewModel.setMsgCallback(object : UserViewModel.MsgEventCallback {
-            override fun callback(msg: String){
+            override fun callback(msg: Int){
                 hander.obtainMessage().also {
                     message->
                     message.what=1
@@ -31,6 +31,7 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>() {
                 }
             }
         })
+        userViewModel.initMessage()
     }
 
     var hander: Handler = @SuppressLint("HandlerLeak")
@@ -38,7 +39,7 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>() {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
             if(msg.what==1)
-            userViewModel.messageListAdapter.items.add(0,msg.obj as String?)
+            userViewModel.addMessage(msg.obj as Int)
         }
     }
 

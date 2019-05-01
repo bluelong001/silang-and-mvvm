@@ -11,27 +11,31 @@ import me.study.silang.model.VideoModel
 import me.study.silang.utils.MediaUtils
 import java.util.*
 
-class VideoListAdapter(context: Context, var callback: VideoListAdapter.Callback) :
+class VideoListAdapter(context: Context) :
     BaseBindingAdapter<VideoModel, me.study.silang.databinding.ListItemVideoBinding>(context) {
     override fun getLayoutResId(viewType: Int): Int {
         return R.layout.list_item_video
     }
+
     override fun onBindItem(binding: me.study.silang.databinding.ListItemVideoBinding?, item: VideoModel?) {
         if (binding != null) {
-            binding.videoCard.setOnClickListener { view->callback.click(view) }
-            binding.model=item
-            binding.videoCard.tag=item
-            binding.video.setImageBitmap(MediaUtils.createVideoThumbnail(item!!.fileUrl!!, MediaStore.Images.Thumbnails.MINI_KIND))
+            binding.videoCard.setOnClickListener { view ->
+                VideoDetailActivity.launch(
+                    (view.tag as VideoModel),
+                    context
+                )
+            }
+            binding.model = item
+            binding.videoCard.tag = item
+            binding.video.setImageBitmap(
+                MediaUtils.createVideoThumbnail(
+                    item!!.fileUrl!!,
+                    MediaStore.Images.Thumbnails.MINI_KIND
+                )
+            )
             binding.executePendingBindings()
 
 
         }
     }
-
-
-
-    interface Callback{
-        fun click(v: View)
-    }
-
 }

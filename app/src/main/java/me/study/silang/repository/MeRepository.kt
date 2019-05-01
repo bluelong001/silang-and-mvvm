@@ -15,6 +15,10 @@ interface MeRepository  {
 
     @FormUrlEncoded
     @PUT("user/swap-head")
-    fun update(@FieldMap param: Param): Observable<Rest<String>>
+    fun updateHead(@FieldMap param: Param): Observable<Rest<String>>
+
+    @FormUrlEncoded
+    @PUT("user/swap-signature")
+    fun updateSignature(@FieldMap param: Param): Observable<Rest<String>>
 
 }

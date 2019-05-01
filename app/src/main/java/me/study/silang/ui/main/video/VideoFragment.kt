@@ -13,6 +13,7 @@ import android.widget.SearchView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -30,20 +31,14 @@ import java.io.File
 import java.util.*
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.jcodecraeer.xrecyclerview.XRecyclerView
+import kotlinx.android.synthetic.main.activity_video_detail.*
 import kotlinx.android.synthetic.main.fragment_bbs.*
 import me.study.silang.ui.main.UserViewModel
 import me.study.silang.ui.main.bbs.PostListAdapter
 
 
-class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoListAdapter.Callback {
-    override fun click(v: View) {
-        var videoInfo: VideoModel = v.tag as VideoModel
-        Intent(context, VideoDetailActivity::class.java).also { intent ->
-            intent.putExtra("data", Gson().toJson(videoInfo))
-            intent.putExtra("userId",userViewModel.userInfo.get()!!.id)
-            startActivity(intent)
-        }
-    }
+class VideoFragment : BaseFragment<FragmentVideoBinding>(){
+
 
     companion object {
         private const val TAG = "VideoFragment"
@@ -54,14 +49,16 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoListAdapter.Cal
     override val layoutId: Int = R.layout.fragment_video
 
     lateinit var vm: VideoViewModel
-    lateinit var userViewModel:UserViewModel
+    lateinit var userViewModel: UserViewModel
 
     @SuppressLint("WrongConstant")
     override fun initView() {
         vm = VideoViewModel(mContext)
-        vm.videoListAdapter = VideoListAdapter(mContext, this)
+        vm.videoListAdapter = VideoListAdapter(mContext)
         vm.initVideo(null)
         userViewModel = ViewModelProviders.of(activity!!).get(UserViewModel::class.java)
+
+
 
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -71,7 +68,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoListAdapter.Cal
         // 监听listview滚到最底部
         gv_video.setLoadingListener(object : XRecyclerView.LoadingListener {
             override fun onRefresh() {
-                vm.videoListAdapter = VideoListAdapter(mContext, this@VideoFragment)
+                vm.videoListAdapter = VideoListAdapter(mContext)
                 vm.initVideo(object : AnyCallback() {
                     override fun callback() {
                         gv_video.adapter = vm.videoListAdapter
@@ -80,6 +77,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoListAdapter.Cal
                     }
                 })
             }
+
             override fun onLoadMore() {
                 vm.selectVideo(object : AnyCallback() {
                     override fun callback() {
@@ -88,7 +86,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoListAdapter.Cal
                 })
             }
         })
-        sv_video.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        sv_video.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 vm.query(query!!)
                 return false
@@ -102,7 +100,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoListAdapter.Cal
     }
 
 
-    fun upload(){
+    fun upload() {
         vm.insertVideo(object : AnyCallback() {
             override fun callback() {
                 findVideo.setImageBitmap(resources.getDrawable(R.drawable.ic_add_black_48dp).toBitmap())
@@ -112,6 +110,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoListAdapter.Cal
 
         })
     }
+
     fun closeAddDialog() {
         vm.addStatus.set(false)
     }
@@ -154,7 +153,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(), VideoListAdapter.Cal
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
-        if(resultCode== RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CODE_CHOOSE) {
                 vm.videoUri.set(Matisse.obtainResult(intent!!)[0])
             } else if (requestCode == REQUEST_CODE_MAKE) {

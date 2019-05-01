@@ -25,7 +25,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initView() {
         val userViewModel: UserViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         userViewModel.initService(this)
-        userViewModel.initUser(null)
+        userViewModel.initUser(null,this)
 
     }
 

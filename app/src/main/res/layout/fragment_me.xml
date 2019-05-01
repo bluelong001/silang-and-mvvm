@@ -41,12 +41,24 @@
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginEnd="8dp"/>
+                <TextView
+                        android:text="@{fragment.userViewModel.userInfo.signature}"
+                        android:onClick="@{()->fragment.setSignature()}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/signature"
+                        app:layout_constraintTop_toBottomOf="@+id/textView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp" android:layout_marginBottom="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/constraintLayout11" android:layout_marginTop="8dp"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content" app:layout_constraintTop_toBottomOf="@+id/textView"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginTop="32dp" android:id="@+id/constraintLayout11">
+                        android:layout_marginTop="32dp" android:id="@+id/constraintLayout11"
+                        app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="1.0">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                             android:background="@color/secondaryDarkColor"

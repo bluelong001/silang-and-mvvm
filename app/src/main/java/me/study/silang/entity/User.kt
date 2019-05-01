@@ -25,6 +25,7 @@ class User : Serializable {
     var fileId: Int? = null
 
     var role: Int? = null
+    var signature:String?=""
     init {
         id=null
         username=""
@@ -32,6 +33,7 @@ class User : Serializable {
         displayname=""
         fileId=null
         role=null
+        signature=""
     }
     companion object {
 

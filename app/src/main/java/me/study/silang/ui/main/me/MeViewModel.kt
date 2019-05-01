@@ -30,9 +30,10 @@ import java.io.File
 import java.util.ArrayList
 
 class MeViewModel(var context: Context) : BaseViewModel() {
-//    var model = ObservableField<UserInfo>()
+    //    var model = ObservableField<UserInfo>()
 //    var userData = ObservableField<UserData>()
     var headImgUrl = ObservableField<String>()
+    var signature = ObservableField<String>()
     var service: MeRepository =
         (RetrofitManager.getInstance<MeRepository>(context, MeRepository::class.java).service as MeRepository?)!!
 //
@@ -41,6 +42,24 @@ class MeViewModel(var context: Context) : BaseViewModel() {
 //
 //    }
 
+    fun updateSignature(signature: String, callback: AnyCallback?) {
+        Param().also { param ->
+            param.put("signature", signature)
+            service.updateHead(param)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : RetrofitCallback<Any>() {
+                    override fun onSuccess(data: Any?) {
+                        callback?.callback()
+
+                    }
+
+                    override fun onFailure(msg: String?) {
+                    }
+
+                })
+        }
+    }
 
     fun updateHead(callback: AnyCallback?) {
         val out = File(headImgUrl.get()!!)
@@ -56,8 +75,8 @@ class MeViewModel(var context: Context) : BaseViewModel() {
             .subscribe(object : RetrofitCallback<Any>() {
                 override fun onSuccess(data: Any?) {
                     User().also { user ->
-                        user.fileId= Integer.parseInt(data as String)
-                        service.update(Param().putObj(user))
+                        user.fileId = Integer.parseInt(data as String)
+                        service.updateHead(Param().putObj(user))
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(object : RetrofitCallback<Any>() {

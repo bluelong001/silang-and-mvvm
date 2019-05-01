@@ -11,6 +11,7 @@ class UserInfo : Serializable {
     var headIcon: String? = null
 
     var role: Int? = null
+    var signature: String? = ""
 
     companion object {
 
