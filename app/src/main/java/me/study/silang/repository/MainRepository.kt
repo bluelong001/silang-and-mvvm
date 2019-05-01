@@ -23,7 +23,7 @@ interface MainRepository {
     @PUT("user/set-pass")
     fun updatePass(@Field("userId") userId: Int, @Field("oldPass") oldPass: String, @Field("newPass") newPass: String): Observable<Rest<String>>
 
-    @GET("message/list")
+    @GET("message/list/user")
     fun listMessages(): Observable<Rest<List<Message>>>
 
     @GET("message/get/by-id")
