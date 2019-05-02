@@ -42,15 +42,16 @@ class MeViewModel(var context: Context) : BaseViewModel() {
 //
 //    }
 
-    fun updateSignature(signature: String, callback: AnyCallback?) {
+    fun updateSignature(sign: String, callback: AnyCallback?) {
         Param().also { param ->
-            param.put("signature", signature)
-            service.updateHead(param)
+            param.put("signature", sign)
+            service.updateSignature(param)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : RetrofitCallback<Any>() {
                     override fun onSuccess(data: Any?) {
                         callback?.callback()
+                        signature.set(sign)
 
                     }
 

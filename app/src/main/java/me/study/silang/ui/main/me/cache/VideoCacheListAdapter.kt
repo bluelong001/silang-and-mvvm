@@ -24,6 +24,7 @@ class VideoCacheListAdapter(context: Context) :
 //            binding.model=item
             binding.btnDelete.setOnClickListener {
                 RoomHelper.getInstance(context)!!.delete(item!!)
+                items.remove(item)
             }
             binding.videoCard.tag = item
             binding.executePendingBindings()

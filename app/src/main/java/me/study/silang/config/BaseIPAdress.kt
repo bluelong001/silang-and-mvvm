@@ -3,9 +3,9 @@ package me.study.silang.config
 object BaseIPAdress{
 
 
-    val ip = "192.168.199.225"
+    val ip = "wjb666.top"
     val socketPort = "9000"
-    val httpPort="8080"
+    val httpPort="8085"
 
     @JvmStatic
     fun getHttpAddress():String

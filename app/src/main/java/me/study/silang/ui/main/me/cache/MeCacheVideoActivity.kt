@@ -31,15 +31,6 @@ class MeCacheVideoActivity : BaseActivity<ActivityMeSetBinding>() {
         vm.initVideoCache()
 
 
-        // 监听listview滚到最底部
-        list_video_cache.setLoadingListener(object : XRecyclerView.LoadingListener {
-            override fun onRefresh() {
-
-            }
-            override fun onLoadMore() {
-
-            }
-        })
     }
 
     fun back(){

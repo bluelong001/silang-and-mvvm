@@ -31,7 +31,7 @@ public class DownloadAsyncTask extends AsyncTask<Integer, Integer, String> {
     private DownloadSuccess downloadSuccess;
 
     public interface DownloadSuccess {
-        void callback();
+        void callback(String requestUrl);
     }
 
     public DownloadAsyncTask(Context mContext, ProgressDialog dialog, String fileName, String requestUrlPath, DownloadSuccess downloadSuccess) {
@@ -77,15 +77,18 @@ public class DownloadAsyncTask extends AsyncTask<Integer, Integer, String> {
             dialog.setProgress(value);
             if (value == 100) {
                 Toast.makeText(mContext, "下载完成", Toast.LENGTH_SHORT).show();
-                downloadSuccess.callback();
+                dialog.cancel();
+                downloadSuccess.callback(downloadUrlStr);
             }
         }
     }
+    String downloadUrlStr="";
+
 
     // 4下载器下载
     public void downloadByDownloadManager(Context context, String fileName, String requestUrlStr) {
 
-        String downloadUrlStr = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName;
+        downloadUrlStr = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) + File.separator + fileName;
         DownloadManager.Request downloadRequest = new DownloadManager.Request(Uri.parse(requestUrlStr));
         // 通过setAllowedNetworkTypes方法可以设置允许在何种网络下下载
         downloadRequest.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);

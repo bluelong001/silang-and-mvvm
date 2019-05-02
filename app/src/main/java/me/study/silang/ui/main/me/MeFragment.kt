@@ -66,6 +66,7 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
     fun setSignature() {
         val mEdit = EditText(mContext)
         var dialog = AlertDialog.Builder(mContext)
+            .setTitle("修改你的个性签名")
             .setView(mEdit)
             .setPositiveButton("确认输入"
             ) { dialog, which -> vm.updateSignature(mEdit.text.toString(), null) }

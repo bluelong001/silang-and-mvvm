@@ -20,7 +20,7 @@ public class MeCacheVideoShowActivity extends GSYBaseActivityDetail<StandardGSYV
     StandardGSYVideoPlayer detailPlayer;
 
     public static void launch(Context context, String url) {
-        Intent intent = new Intent(context, MeCacheVideoActivity.class);
+        Intent intent = new Intent(context, MeCacheVideoShowActivity.class);
         intent.putExtra("fileUrl", url);
         context.startActivity(intent);
     }

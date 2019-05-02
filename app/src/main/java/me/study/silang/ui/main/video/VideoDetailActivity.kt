@@ -57,8 +57,8 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
     private var isPause: Boolean = false
     lateinit var model: VideoModel
 
-    companion object{
-        fun launch(videoModel: VideoModel,context:Context){
+    companion object {
+        fun launch(videoModel: VideoModel, context: Context) {
             var videoInfo: VideoModel = videoModel
             Intent(context, VideoDetailActivity::class.java).also { intent ->
                 intent.putExtra("data", Gson().toJson(videoInfo))
@@ -99,18 +99,17 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
             ProgressDialog(this),
             fileName,
             model.fileUrl,
-            object : DownloadAsyncTask.DownloadSuccess {
-                override fun callback() {
+            DownloadAsyncTask.DownloadSuccess { url ->
+                run {
                     VideoCache().also { videoCache ->
                         videoCache.userId = userId
                         videoCache.title = model.title
                         videoCache.content = model.content
-                        videoCache.localUrl = Environment.DIRECTORY_DOWNLOADS + File.separator + fileName
-
+                        videoCache.localUrl = url
                         RoomHelper.getInstance(this@VideoDetailActivity)!!.download(videoCache)
                     }
-                }
 
+                }
             }).also { task -> task.execute() }
 
 
@@ -120,7 +119,7 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
     @SuppressLint("WrongConstant")
     override fun initView() {
         model = Gson().fromJson(intent.getStringExtra("data"), VideoModel::class.java)
-        userId = getSharedPreferences("silang_user_info",Context.MODE_PRIVATE).getInt("userId",0)
+        userId = getSharedPreferences("silang_user_info", Context.MODE_PRIVATE).getInt("userId", 0)
 
 
         imgListAdapter = VideoImgListAdapter(this)
