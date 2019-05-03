@@ -4,6 +4,7 @@ import android.text.TextUtils
 import android.view.View
 import androidx.databinding.BindingAdapter
 import me.study.silang.component.HeadIconView
+import me.study.silang.component.InternetImageView
 import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.function.Consumer
@@ -13,7 +14,7 @@ import javax.xml.datatype.DatatypeConstants.SECONDS
 object BaseDataBindingAdapter {
     @BindingAdapter("imgUrl")
     @JvmStatic
-    fun setImgUrl(view: HeadIconView, url: String?) {
+    fun setImgUrl(view: InternetImageView, url: String?) {
         if (!TextUtils.isEmpty(url)) view.setImageURL(url)
     }
 

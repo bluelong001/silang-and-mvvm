@@ -27,12 +27,7 @@ class VideoListAdapter(context: Context) :
             }
             binding.model = item
             binding.videoCard.tag = item
-            binding.video.setImageBitmap(
-                MediaUtils.createVideoThumbnail(
-                    item!!.fileUrl!!,
-                    MediaStore.Images.Thumbnails.MINI_KIND
-                )
-            )
+//            binding.video.set
             binding.executePendingBindings()
 
 

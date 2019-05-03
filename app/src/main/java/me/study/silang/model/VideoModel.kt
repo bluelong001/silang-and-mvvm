@@ -19,7 +19,7 @@ class VideoModel : Serializable {
     var content = ""
 
     var title = ""
-    var imgList=""
+    var imgList = ""
     var gmtCreate = "2018-01-01 00:00:00"
 
     var gmtUpdate = "2018-01-01 00:00:00"
@@ -27,6 +27,7 @@ class VideoModel : Serializable {
     var userInfo: UserInfo? = null
 
     var fileUrl: String? = null
+    var videoHead: String? = null
 
     companion object {
 
