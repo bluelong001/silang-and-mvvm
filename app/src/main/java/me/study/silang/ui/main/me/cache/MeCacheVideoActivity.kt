@@ -42,6 +42,7 @@ class MeCacheVideoActivity : BaseActivity<ActivityMeSetBinding>() {
             activity.apply {
                 Intent(this, MeCacheVideoActivity::class.java).also {
                  intent ->
+                    intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
                     intent.putExtra("userId",userId)
                     startActivity(intent)
                 }

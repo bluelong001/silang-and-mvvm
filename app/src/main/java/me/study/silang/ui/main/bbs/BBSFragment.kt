@@ -26,6 +26,7 @@ class BBSFragment : BaseFragment<FragmentBbsBinding>(), PostListAdapter.Callback
         var postInfo: PostModel = v.tag as PostModel
         Intent(context, PostDetailActivity::class.java).also { intent ->
             intent.putExtra("data", Gson().toJson(postInfo))
+            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
         }
     }
@@ -64,6 +65,7 @@ class BBSFragment : BaseFragment<FragmentBbsBinding>(), PostListAdapter.Callback
 
     fun newPost() {
         Intent(activity, PostNewActivity::class.java).also { intent ->
+            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivityForResult(intent, REQUEST_CODE_NEW_POST)
         }
     }

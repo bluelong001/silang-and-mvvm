@@ -36,8 +36,11 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
             this.disconnect()
         }
         activity.apply {
-            startActivity(Intent(this, LoginActivity::class.java))
-            this!!.finish()
+            Intent(this, LoginActivity::class.java).also { intent ->
+                intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+                startActivity(intent)
+                this!!.finish()
+            }
         }
     }
 
@@ -68,9 +71,11 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
         var dialog = AlertDialog.Builder(mContext)
             .setTitle("修改你的个性签名")
             .setView(mEdit)
-            .setPositiveButton("确认输入"
+            .setPositiveButton(
+                "确认输入"
             ) { dialog, which -> vm.updateSignature(mEdit.text.toString(), null) }
-            .setNegativeButton("取消输入"
+            .setNegativeButton(
+                "取消输入"
             ) { dialog, which -> dialog.cancel() }
         dialog.show()
     }

@@ -32,6 +32,17 @@ object BaseDataBindingAdapter {
         }
 
     }
+
+    @BindingAdapter("openStatus")
+    @JvmStatic
+    fun noAdminVisibility(view: View, visibility: Boolean?) {
+        if (visibility != null) {
+            if (visibility)
+                view.visibility = View.GONE
+            else view.visibility = View.VISIBLE
+
+        }
+    }
 //    var lastClickTime: Long = 0L
 //    @BindingAdapter("android:onClick")
 //    @JvmStatic

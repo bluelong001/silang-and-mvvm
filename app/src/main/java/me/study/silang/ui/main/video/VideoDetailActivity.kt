@@ -1,6 +1,7 @@
 package me.study.silang.ui.main.video
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.app.DownloadManager
 import android.app.ProgressDialog
 import android.content.BroadcastReceiver
@@ -38,6 +39,10 @@ import com.google.android.flexbox.JustifyContent
 import com.google.android.material.internal.FlowLayout
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_post_new.*
+import kotlinx.android.synthetic.main.list_item_message.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import me.study.silang.BuildConfig
 import me.study.silang.R
 import me.study.silang.component.MyGridNoScrollLayoutManager
@@ -62,6 +67,7 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
             var videoInfo: VideoModel = videoModel
             Intent(context, VideoDetailActivity::class.java).also { intent ->
                 intent.putExtra("data", Gson().toJson(videoInfo))
+                intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
                 context.startActivity(intent)
             }
         }
@@ -118,6 +124,12 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
     var userId: Int = 0
     @SuppressLint("WrongConstant")
     override fun initView() {
+        var dialog = ProgressDialog(this@VideoDetailActivity).also { dialog ->
+            dialog.setMessage("获取视频信息，请等待")
+            dialog.show()
+
+        }
+
         model = Gson().fromJson(intent.getStringExtra("data"), VideoModel::class.java)
         userId = getSharedPreferences("silang_user_info", Context.MODE_PRIVATE).getInt("userId", 0)
 
@@ -133,27 +145,36 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
         var type = object : TypeToken<ArrayList<String>>() {}.type
         var list = Gson().fromJson(model.imgList, type) as ArrayList<String>?
         if (null != list) imgListAdapter.items.addAll(list)
-
-
-        //增加封面
-        val imageView = ImageView(this)
-        imageView.setImageBitmap(
-            MediaUtils.createVideoThumbnail(
-                model.fileUrl!!,
-                MediaStore.Images.Thumbnails.MINI_KIND
-            )
-        )
-
         //增加title
         detailPlayer.titleTextView.visibility = View.GONE
         detailPlayer.backButton.visibility = View.GONE
+//        GlobalScope.launch {
+            initVideo()
+            dialog.dismiss()
+//
+//        }
+    }
+
+    private fun initVideo() {
+
+        //增加封面
+//        val imageView = ImageView(this)
+//        imageView.setImageBitmap(
+//            MediaUtils.createVideoThumbnail(
+//                model.fileUrl!!,
+//                MediaStore.Images.Thumbnails.MINI_KIND
+//            )
+//        )
+
+
 
         orientationUtils = OrientationUtils(this, detailPlayer)
 //初始化不打开外部的旋转
         orientationUtils!!.isEnable = false
 
         val gsyVideoOption = GSYVideoOptionBuilder()
-        gsyVideoOption.setThumbImageView(imageView)
+        gsyVideoOption
+//            .setThumbImageView(imageView)
             .setIsTouchWiget(true)
             .setLooping(true)
             .setRotateViewAuto(false)
@@ -194,7 +215,6 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding>() {
             //第一个true是否需要隐藏actionbar，第二个true是否需要隐藏statusbar
             detailPlayer.startWindowFullscreen(this@VideoDetailActivity, true, true)
         }
-
     }
 
     override fun onBackPressed() {

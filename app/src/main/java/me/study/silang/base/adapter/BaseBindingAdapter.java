@@ -76,7 +76,8 @@ public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends R
 
     protected void onItemRangeInserted(ObservableArrayList<M> newItems, int positionStart, int itemCount) {
         resetItems(newItems);
-        notifyItemRangeInserted(positionStart, itemCount);
+        notifyDataSetChanged();
+//        notifyItemRangeInserted(positionStart, itemCount);
     }
 
     protected void onItemRangeMoved(ObservableArrayList<M> newItems) {

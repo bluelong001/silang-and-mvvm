@@ -77,6 +77,7 @@ class MeSetActivity : BaseActivity<ActivityMeSetBinding>() {
 
         fun launch(activity: androidx.fragment.app.FragmentActivity , userInfo: UserInfo) {
             var intent = Intent(activity, MeSetActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
             intent.putExtras(Bundle().also { bundle -> bundle.putSerializable("userInfo", userInfo) })
             activity.apply { startActivity(intent) }
         }
