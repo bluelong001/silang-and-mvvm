@@ -61,7 +61,10 @@ class MeSetActivity : BaseActivity<ActivityMeSetBinding>() {
                 override fun onSuccess(data: Any?) {
                     AlertDialog.Builder(this@MeSetActivity)
                         .setMessage("修改成功")
-                        .setOnDismissListener { dialog-> finish() }
+                        .setOnDismissListener { dialog->
+                            run{
+                                setResult(Activity.RESULT_OK)
+                                finish()} }
                         .show()
                 }
 
@@ -74,12 +77,12 @@ class MeSetActivity : BaseActivity<ActivityMeSetBinding>() {
         finish()
     }
     companion object {
-
+        const val REQUEST_CODE_SET:Int = 30
         fun launch(activity: androidx.fragment.app.FragmentActivity , userInfo: UserInfo) {
             var intent = Intent(activity, MeSetActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
             intent.putExtras(Bundle().also { bundle -> bundle.putSerializable("userInfo", userInfo) })
-            activity.apply { startActivity(intent) }
+            activity.apply { startActivityForResult(intent,0) }
         }
 
     }

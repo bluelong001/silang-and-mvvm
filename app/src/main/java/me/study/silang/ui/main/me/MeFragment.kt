@@ -73,7 +73,8 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
             .setView(mEdit)
             .setPositiveButton(
                 "确认输入"
-            ) { dialog, which -> vm.updateSignature(mEdit.text.toString(), null) }
+            ) { dialog, which -> run{vm.updateSignature(mEdit.text.toString(), null)
+            userViewModel.initUser(null,mContext )}}
             .setNegativeButton(
                 "取消输入"
             ) { dialog, which -> dialog.cancel() }
@@ -84,13 +85,15 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
         super.onActivityResult(requestCode, resultCode, intent)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == VideoFragment.REQUEST_CODE_CHOOSE) {
-
                 vm.headImgUrl.set(Matisse.obtainPathResult(intent!!)[0])
                 vm.updateHead(object : AnyCallback() {
                     override fun callback() {
                         userViewModel.initUser(null, mContext)
                     }
                 })
+            }
+            else if(requestCode == MeSetActivity.REQUEST_CODE_SET){
+                userViewModel.initUser(null,mContext)
             }
         }
 

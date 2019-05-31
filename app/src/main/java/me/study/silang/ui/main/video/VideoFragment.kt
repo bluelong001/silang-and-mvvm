@@ -44,6 +44,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(){
         private const val TAG = "VideoFragment"
         const val REQUEST_CODE_CHOOSE: Int = 1
         const val REQUEST_CODE_MAKE: Int = 2
+
     }
 
     override val layoutId: Int = R.layout.fragment_video
