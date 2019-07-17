@@ -3,7 +3,7 @@ package me.study.silang.config
 object BaseIPAdress{
 
 
-    val ip = "wjb666.top"
+    val ip = "serverip"
     val socketPort = "9000"
     val httpPort="8085"
 
